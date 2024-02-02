@@ -17,7 +17,9 @@ class CaverneFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'titre_caverne' => fake()->jobTitle(),
+            'intro_caverne' => fake()->date(),
+            'image_caverne' => fake()->time('H:i:s'),
         ];
     }
 }

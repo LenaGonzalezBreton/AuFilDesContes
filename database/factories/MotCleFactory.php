@@ -17,7 +17,8 @@ class MotCleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'libelle_conte' => fake()->word(),
+
         ];
     }
 }

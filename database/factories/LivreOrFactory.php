@@ -17,7 +17,8 @@ class LivreOrFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'commentaire_livreor' => fake()->sentence(7),
+            'is_verified_livreor' => fake()->boolean(),
         ];
     }
 }

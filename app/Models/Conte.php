@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Conte extends Model
 {
     use HasFactory;
+
+    public function motcles()
+    {
+        return $this->belongsToMany(MotCle::class);
+    }
 }

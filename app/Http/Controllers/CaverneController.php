@@ -15,12 +15,13 @@ class CaverneController extends Controller
      */
     public function index()
     {
-
         //
         try {
-            $reponse = ReponseApi::ReponseCorrect(Caverne::all());
+            $reponse = ReponseApi::ReponseAllowed(Caverne::all());
             return json_encode($reponse);
         } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
         }
     }
 
@@ -43,9 +44,16 @@ class CaverneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Caverne $caverne)
+    public function show(int $id)
     {
         //
+        try {
+            $reponse = ReponseApi::ReponseAllowed(Caverne::find($id));
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 
     /**

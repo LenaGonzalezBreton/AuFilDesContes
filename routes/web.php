@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\CaverneController;
+use App\Http\Controllers\ConteController;
+use App\Http\Controllers\LivreOrController;
+use App\Http\Controllers\MotCleController;
+use App\Http\Controllers\PageController;
+use App\Models\LivreOr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +22,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resources([
+    'caverne' => CaverneController::class,
+    'conte' => ConteController::class,
+    'livreor' => LivreOrController::class,
+    'motcle' => MotCleController::class,
+    'page' => PageController::class,
+]);

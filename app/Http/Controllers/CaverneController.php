@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Caverne;
 use App\Http\Requests\StoreCaverneRequest;
 use App\Http\Requests\UpdateCaverneRequest;
+use App\Providers\ReponseApi;
+use Throwable;
 
 class CaverneController extends Controller
 {
@@ -13,7 +15,13 @@ class CaverneController extends Controller
      */
     public function index()
     {
+
         //
+        try {
+            $reponse = ReponseApi::ReponseCorrect(Caverne::all());
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+        }
     }
 
     /**

@@ -16,3 +16,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+public static function reponseCorrect($datas){
+    $reponse = [
+        'success' => $true,
+        'code' => "00000",
+        'datas' => $datas
+    ];
+
+} 
+
+
+reponse = {
+
+}
+

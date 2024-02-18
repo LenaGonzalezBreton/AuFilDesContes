@@ -39,6 +39,20 @@ class CaverneController extends Controller
     public function store(StoreCaverneRequest $request)
     {
         //
+
+        try {
+            $caverne = Caverne::create([
+                'titre_caverne' => $request['titre_caverne'],
+                'intro_caverne' => $request['intro_caverne'],
+                'image_caverne' => $request['image_caverne']
+            ]);
+            $caverne->save();
+            $reponse = ReponseApi::ReponseAllowed('');
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 
     /**
@@ -62,6 +76,7 @@ class CaverneController extends Controller
     public function edit(Caverne $caverne)
     {
         //
+
     }
 
     /**
@@ -70,6 +85,18 @@ class CaverneController extends Controller
     public function update(UpdateCaverneRequest $request, Caverne $caverne)
     {
         //
+        try {
+            $cav = Caverne::find($caverne);
+            $cav->titre_caverne = $request['titre_caverne'];
+            $cav->intro_caverne = $request['intro_caverne'];
+            $cav->image_caverne = $request['image_caverne'];
+            $caverne->save();
+            $reponse = ReponseApi::ReponseAllowed('');
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 
     /**
@@ -78,5 +105,13 @@ class CaverneController extends Controller
     public function destroy(Caverne $caverne)
     {
         //
+        try {
+            Caverne::destroy($caverne);
+            $reponse = ReponseApi::ReponseAllowed('');
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 }

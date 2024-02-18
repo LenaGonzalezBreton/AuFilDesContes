@@ -13,5 +13,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'caverne/*', // toute les routes de cavernes
+        'caverne', // toute les routes de cavernes
+
     ];
 }

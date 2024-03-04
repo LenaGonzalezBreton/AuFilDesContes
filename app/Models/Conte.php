@@ -13,4 +13,9 @@ class Conte extends Model
     {
         return $this->belongsToMany(MotCle::class);
     }
+
+    public function caverne()
+    {
+        return $this->belongsTo(caverne::class);
+    }
 }

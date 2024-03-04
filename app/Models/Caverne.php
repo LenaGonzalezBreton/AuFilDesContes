@@ -14,4 +14,9 @@ class Caverne extends Model
         'intro_caverne',
         'image_caverne'
     ];
+
+    public function conte()
+    {
+        return $this->hasMany(conte::class);
+    }
 }

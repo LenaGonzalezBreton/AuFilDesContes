@@ -23,6 +23,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/showconte/{id}', [CaverneController::class, 'showconte']);
+
 Route::resources([
     'caverne' => CaverneController::class,
     'conte' => ConteController::class,

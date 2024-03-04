@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Caverne;
 use App\Http\Requests\StoreCaverneRequest;
 use App\Http\Requests\UpdateCaverneRequest;
+use App\Models\Conte;
 use App\Providers\ReponseApi;
 use Throwable;
 
@@ -13,7 +14,7 @@ class CaverneController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() //Get caverne
     {
         //
         try {
@@ -58,11 +59,22 @@ class CaverneController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(int $id) //cavernes/{idCaverne} 
     {
         //
         try {
             $reponse = ReponseApi::ReponseAllowed(Caverne::find($id));
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
+    }
+
+    public function showconte(int $id)
+    {
+        try {
+            $reponse = ReponseApi::ReponseAllowed(Caverne::find($id)->conte);
             return json_encode($reponse);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);

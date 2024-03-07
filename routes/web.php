@@ -25,8 +25,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// AppVersion Controller
+
 Route::get('/app-conf', [AppVersionController::class, 'AppConf']);
-Route::post('/deploy-release/{version}', [AppVersionController::class, 'DeployRelease']);
+Route::post('/deploy-release/{newVersion}', [AppVersionController::class, 'DeployRelease']);
+
+// Conte Controller
+
+Route::post('/conte/{id}/eval/{note}', [ConteController::class, 'eval']);
 
 
 Route::resources([

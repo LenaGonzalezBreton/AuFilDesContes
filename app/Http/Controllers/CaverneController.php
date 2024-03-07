@@ -41,19 +41,19 @@ class CaverneController extends Controller
     {
         //
 
-        try {
-            $caverne = Caverne::create([
-                'titre_caverne' => $request['titre_caverne'],
-                'intro_caverne' => $request['intro_caverne'],
-                'image_caverne' => $request['image_caverne']
-            ]);
-            $caverne->save();
-            $reponse = ReponseApi::ReponseAllowed('');
-            return json_encode($reponse);
-        } catch (Throwable $error) {
-            $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
-        }
+        // try {
+        //     $caverne = Caverne::create([
+        //         'titre_caverne' => $request['titre_caverne'],
+        //         'intro_caverne' => $request['intro_caverne'],
+        //         'image_caverne' => $request['image_caverne']
+        //     ]);
+        //     $caverne->save();
+        //     $reponse = ReponseApi::ReponseAllowed('');
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 
     /**
@@ -62,24 +62,13 @@ class CaverneController extends Controller
     public function show(int $id) //cavernes/{idCaverne} 
     {
         //
-        try {
-            $reponse = ReponseApi::ReponseAllowed(Caverne::find($id));
-            return json_encode($reponse);
-        } catch (Throwable $error) {
-            $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
-        }
-    }
-
-    public function showconte(int $id)
-    {
-        try {
-            $reponse = ReponseApi::ReponseAllowed(Caverne::find($id)->conte);
-            return json_encode($reponse);
-        } catch (Throwable $error) {
-            $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
-        }
+        // try {
+        //     $reponse = ReponseApi::ReponseAllowed(Caverne::find($id));
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 
     /**
@@ -97,18 +86,18 @@ class CaverneController extends Controller
     public function update(UpdateCaverneRequest $request, Caverne $caverne)
     {
         //
-        try {
-            $cav = Caverne::find($caverne);
-            $cav->titre_caverne = $request['titre_caverne'];
-            $cav->intro_caverne = $request['intro_caverne'];
-            $cav->image_caverne = $request['image_caverne'];
-            $caverne->save();
-            $reponse = ReponseApi::ReponseAllowed('');
-            return json_encode($reponse);
-        } catch (Throwable $error) {
-            $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
-        }
+        // try {
+        //     $cav = Caverne::find($caverne);
+        //     $cav->titre_caverne = $request['titre_caverne'];
+        //     $cav->intro_caverne = $request['intro_caverne'];
+        //     $cav->image_caverne = $request['image_caverne'];
+        //     $caverne->save();
+        //     $reponse = ReponseApi::ReponseAllowed('');
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 
     /**
@@ -117,13 +106,13 @@ class CaverneController extends Controller
     public function destroy(Caverne $caverne)
     {
         //
-        try {
-            Caverne::destroy($caverne);
-            $reponse = ReponseApi::ReponseAllowed('');
-            return json_encode($reponse);
-        } catch (Throwable $error) {
-            $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
-        }
+        // try {
+        //     Caverne::destroy($caverne);
+        //     $reponse = ReponseApi::ReponseAllowed('');
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 }

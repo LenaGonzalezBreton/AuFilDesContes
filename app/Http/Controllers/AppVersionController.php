@@ -77,19 +77,16 @@ class AppVersionController extends Controller
         }
     }
 
-    public function DeployRelease(string $appVersion)
+    public function DeployRelease(string $newVersion)
     {
         try {
-            $AppConf = AppVersion::all()->first();
-            $AppConf->version = $request['titre_caverne'];
-            $cav->intro_caverne = $request['intro_caverne'];
-            $cav->image_caverne = $request['image_caverne'];
-            $caverne->save();
+            $appConf = AppVersion::all()->first();
+            $appConf->version = $newVersion;
+            $appConf->save();
             $reponse = ReponseApi::ReponseAllowed('');
-            return json_encode($reponse);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
         }
+        return json_encode($reponse);
     }
 }

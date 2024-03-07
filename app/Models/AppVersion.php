@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class AppVersion extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'version',
+
+    ];
 }

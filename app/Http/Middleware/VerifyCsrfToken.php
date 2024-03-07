@@ -12,9 +12,12 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        // a désactivé lors de la mise en service
         'caverne/*', // toute les routes de cavernes
         'caverne', // toute les routes de cavernes
+        'deploy-release/*',
+        'conte/*',
+
 
     ];
 }

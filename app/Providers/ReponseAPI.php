@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+
 class ReponseApi
 {
     /**

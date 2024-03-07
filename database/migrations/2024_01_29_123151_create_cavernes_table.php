@@ -18,7 +18,20 @@ return new class extends Migration
             $table->string("image_caverne");
             $table->timestamps();
         });
+
+        // Schema::create('app_version', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string("version");
+        // });
+
+        // Schema::create('token', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string("login_token");
+        //     $table->string("mot_de_passe");
+        // });
     }
+
+
 
     /**
      * Reverse the migrations.
@@ -26,5 +39,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('cavernes');
+        Schema::dropIfExists('app_version');
+        Schema::dropIfExists('token');
     }
 };

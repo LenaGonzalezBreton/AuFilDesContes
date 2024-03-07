@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AppVersionController;
 use App\Http\Controllers\CaverneController;
 use App\Http\Controllers\ConteController;
 use App\Http\Controllers\LivreOrController;
 use App\Http\Controllers\MotCleController;
 use App\Http\Controllers\PageController;
+use App\Models\AppVersion;
 use App\Models\LivreOr;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +25,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/showconte/{id}', [CaverneController::class, 'showconte']);
+Route::get('/app-conf', [AppVersionController::class, 'AppConf']);
+Route::post('/deploy-release/{version}', [AppVersionController::class, 'DeployRelease']);
+
 
 Route::resources([
     'caverne' => CaverneController::class,

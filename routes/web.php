@@ -39,7 +39,7 @@ Route::post('/conte/{id}/eval/{note}', [ConteController::class, 'eval']);
 
 // Token controller 
 
-Route::get('/displayError/{error}', [TokenController::class, 'displayError'])->name('displayError');
+Route::get('/displayError/{message}/{code}', [TokenController::class, 'displayError'])->name('displayError');
 
 
 

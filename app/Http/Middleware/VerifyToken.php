@@ -7,6 +7,7 @@ use App\Providers\ReponseApi;
 use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
 use Throwable;
 
@@ -28,20 +29,12 @@ class VerifyToken
             if ($mdp == $request['mot_de_passe']) {
                 return $next($request);
             } else {
-                try {
-                    abort(401);
-                } catch (Throwable $error) {
-                    return redirect()->route('displayError', ['error' => $error]);
-                };
+                $error = new \Exception("Unauthorized", 401);
+                return redirect()->route('displayError', ['message' => $error->getMessage(), 'code' => $error->getCode()]);
             }
         } else {
-            try {
-                abort(401);
-            } catch (Throwable $error) {
-                dd($error);
-
-                return redirect()->route('displayError', ['error' => $error]);
-            }
+            $error = new \Exception("Unauthorized", 401);
+            return redirect()->route('displayError', ['message' => $error->getMessage(), 'code' => $error->getCode()]);
         }
     }
 }

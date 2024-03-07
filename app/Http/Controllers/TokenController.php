@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Token;
 use App\Http\Requests\StoreTokenRequest;
 use App\Http\Requests\UpdateTokenRequest;
-
+use App\Providers\ReponseApi;
 
 class TokenController extends Controller
 {
@@ -63,5 +63,12 @@ class TokenController extends Controller
     public function destroy(Token $token)
     {
         //
+    }
+
+    public function displayError($error)
+    {
+
+        $reponse = ReponseApi::ReponseReject($error);
+        return json_encode($reponse);
     }
 }

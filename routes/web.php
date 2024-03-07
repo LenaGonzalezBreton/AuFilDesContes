@@ -6,6 +6,8 @@ use App\Http\Controllers\ConteController;
 use App\Http\Controllers\LivreOrController;
 use App\Http\Controllers\MotCleController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\TokenController;
+use App\Http\Middleware\VerifyToken;
 use App\Models\AppVersion;
 use App\Models\LivreOr;
 use Illuminate\Support\Facades\Route;
@@ -28,12 +30,17 @@ Route::get('/', function () {
 
 // AppVersion Controller
 
-Route::get('/app-conf', [AppVersionController::class, 'AppConf']);
+Route::get('/app-conf', [AppVersionController::class, 'AppConf'])->middleware(VerifyToken::class);
 Route::post('/deploy-release/{newVersion}', [AppVersionController::class, 'DeployRelease']);
 
 // Conte Controller
 
 Route::post('/conte/{id}/eval/{note}', [ConteController::class, 'eval']);
+
+// Token controller 
+
+Route::get('/displayError/{error}', [TokenController::class, 'displayError'])->name('displayError');
+
 
 
 Route::resources([

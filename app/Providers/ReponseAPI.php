@@ -36,16 +36,4 @@ class ReponseApi
 
         return $reponse;
     }
-
-    public static function ReponseRejectMiddleware($message, $code): array
-    {
-        $reponse =
-            [
-                'success' => false,
-                'code' => $code,
-                'message' => $message,
-            ];
-
-        return $reponse;
-    }
 }

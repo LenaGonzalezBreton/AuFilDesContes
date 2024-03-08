@@ -64,11 +64,4 @@ class TokenController extends Controller
     {
         //
     }
-
-    public function displayError($message, $code)
-    {
-
-        $reponse = ReponseApi::ReponseRejectMiddleware($message, $code);
-        return json_encode($reponse);
-    }
 }

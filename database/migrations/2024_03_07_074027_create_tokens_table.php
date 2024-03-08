@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->string('login_token');
-            $table->string('mot_de_passe');
+            $table->string('app_token');
+            $table->string('deploy_token');
         });
     }
 

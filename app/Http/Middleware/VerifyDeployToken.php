@@ -2,18 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Token;
-use App\Providers\ReponseApi;
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\Response;
-use Throwable;
+use App\Models\Token;
+use Illuminate\Support\Facades\Hash;
 
-use function PHPSTORM_META\elementType;
 
-class VerifyToken
+class VerifyDeployToken
 {
     /**
      * Handle an incoming request.
@@ -23,8 +19,8 @@ class VerifyToken
     public function handle(Request $request, Closure $next): Response
     {
         $verifToken = Token::find(1); // Chercher le token avec un idToken par exemple: idToken => 'app'
-        $token = $verifToken->app_token; // Pour récupérer des info, utilise vraiment l'object : $verifToken->login_token
-
+        $token = $verifToken->deploy_token; // Pour récupérer des info, utilise vraiment l'object : $verifToken->login_token
+        $requestToken = '$2y$10$uVzABMeT96ZK8h2bygdg5OK3W83OuhP50vPeDb9GTegmrtW7kBZwW'; // $request->bearerToken()
         // Ducoup, le token devrai ressembler à ça : 
         // {"
         //     id: 'app',
@@ -32,7 +28,7 @@ class VerifyToken
         //     mdp: null 
         // }
 
-        if ($token == '123465789') { // Le token de la requete viens de $request->bearerToken();
+        if (Hash::check($token, $requestToken)) {
             return $next($request);
         } else {
             // Ne génère pas des érreurs à chaque fois, 
@@ -41,5 +37,4 @@ class VerifyToken
             return response()->json(['code' => 401, 'message' => 'Non autorisé']);
         }
     }
-    // (Après c'est juste des conseil ^^)
 }

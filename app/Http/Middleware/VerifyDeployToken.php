@@ -20,7 +20,7 @@ class VerifyDeployToken
     {
         $verifToken = Token::find(1); // Chercher le token avec un idToken par exemple: idToken => 'app'
         $token = $verifToken->deploy_token; // Pour récupérer des info, utilise vraiment l'object : $verifToken->login_token
-        $requestToken = '$2y$10$uVzABMeT96ZK8h2bygdg5OK3W83OuhP50vPeDb9GTegmrtW7kBZwW'; // $request->bearerToken()
+        $requestToken = $request->bearerToken(); // $request->bearerToken()
         // Ducoup, le token devrai ressembler à ça : 
         // {"
         //     id: 'app',
@@ -28,7 +28,7 @@ class VerifyDeployToken
         //     mdp: null 
         // }
 
-        if (Hash::check($token, $requestToken)) {
+        if ($token === $requestToken) {
             return $next($request);
         } else {
             // Ne génère pas des érreurs à chaque fois, 

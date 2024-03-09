@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('app_token');
             $table->string('deploy_token');
+            $table->timestamps();
         });
     }
 

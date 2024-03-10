@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\AppVersionController;
+use App\Http\Controllers\CaverneController;
+use App\Http\Controllers\ConteController;
+use App\Http\Controllers\LivreOrController;
+use App\Http\Controllers\MotCleController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\TokenController;
+use App\Http\Middleware\VerifyDeployToken;
+use App\Http\Middleware\VerifyToken;
+use App\Models\AppVersion;
+use App\Models\LivreOr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +27,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+// AppVersion Controller
+Route::get('/app-conf', [AppVersionController::class, 'AppConf'])->middleware(VerifyToken::class);
+Route::post('/deploy-release/{newVersion}', [AppVersionController::class, 'DeployRelease'])->middleware(VerifyDeployToken::class);
+// Conte Controller
+
+Route::post('/conte/{id}/eval/{note}', [ConteController::class, 'eval'])->middleware(VerifyToken::class);
+
+
+
+Route::resources([
+    'caverne' => CaverneController::class,
+    'conte' => ConteController::class,
+    'livreor' => LivreOrController::class,
+    'motcle' => MotCleController::class,
+    'page' => PageController::class,
+]);

@@ -17,7 +17,18 @@ class ConteFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'titre_conte' => fake()->word(),
+            'intro_conte' => fake()->sentence(5),
+            'image_conte' => fake()->image(null, 640, 480),
+            'histoire_conte' => fake()->mimeType(),
+            'nombre_lecture_conte' => fake()->numberBetween(1, 20),
+            'note_conte' => fake()->numberBetween(1, 20),
+            'nombre_note_conte' => fake()->numberBetween(1, 20),
+            'caverne_id' => \App\Models\Caverne::inRandomOrder()->first()->id,
+
+
+
+
         ];
     }
 }

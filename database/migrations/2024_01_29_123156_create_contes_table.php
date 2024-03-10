@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contes', function (Blueprint $table) {
-            $table->id("id_conte");
+            $table->id();
             $table->string("titre_conte");
             $table->string("intro_conte");
             $table->string("image_conte");
@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("nombre_lecture_conte");
             $table->integer("note_conte");
             $table->integer("nombre_note_conte");
+            $table->foreignId('caverne_id')->constrained();
             $table->timestamps();
         });
     }

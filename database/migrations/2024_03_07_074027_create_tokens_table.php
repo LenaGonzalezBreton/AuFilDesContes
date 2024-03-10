@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('livre_ors', function (Blueprint $table) {
+        Schema::create('tokens', function (Blueprint $table) {
             $table->id();
-            $table->string("commentaire_livreor");
-            $table->boolean("is_verified_livreor");
+            $table->string('app_token');
+            $table->string('deploy_token');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('livre_ors');
+        Schema::dropIfExists('tokens');
     }
 };

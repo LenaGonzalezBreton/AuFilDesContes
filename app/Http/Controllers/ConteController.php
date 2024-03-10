@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Conte;
 use App\Http\Requests\StoreConteRequest;
 use App\Http\Requests\UpdateConteRequest;
+use App\Providers\ReponseApi;
+use Laravel\Prompts\Note;
+use PhpParser\Node\Scalar\String_;
+use PHPUnit\Event\Code\Throwable;
+use Ramsey\Uuid\Type\Integer;
 
 class ConteController extends Controller
 {
@@ -14,6 +19,13 @@ class ConteController extends Controller
     public function index()
     {
         //
+        try {
+            $reponse = ReponseApi::ReponseAllowed(Conte::all());
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 
     /**
@@ -62,5 +74,24 @@ class ConteController extends Controller
     public function destroy(Conte $conte)
     {
         //
+    }
+
+    public function eval(string $id, string $note)
+    {
+        try {
+            $conte = Conte::find($id);
+
+            $note_conte = $conte->note_conte;
+            $nombre_note_conte = $conte->nombre_note_conte;
+
+            $conte->note_conte = $note_conte + $note;
+            $conte->nombre_note_conte = $nombre_note_conte + 1;
+
+            $conte->save();
+            $reponse = ReponseApi::ReponseAllowed($conte);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+        }
+        return json_encode($reponse);
     }
 }

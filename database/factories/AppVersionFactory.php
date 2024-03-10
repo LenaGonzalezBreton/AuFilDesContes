@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MotCle>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\AppVersion>
  */
-class MotCleFactory extends Factory
+class AppVersionFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,8 +17,7 @@ class MotCleFactory extends Factory
     public function definition(): array
     {
         return [
-            'libelle_conte' => fake()->word(),
-
+            //
         ];
     }
 }

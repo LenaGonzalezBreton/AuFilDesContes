@@ -12,14 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mot_cles', function (Blueprint $table) {
-            $table->id("id_mot_cle");
+            $table->id();
             $table->string("libelle_conte");
             $table->timestamps();
         });
 
-        Schema::create('motcle_conte', function (Blueprint $table) {
-            $table->foreignIdFor(\App\Models\Conte::class);
-            $table->foreignIdFor(\App\Models\MotCle::class);
+        Schema::create('conte_mot_cle', function (Blueprint $table) {
+            // $table->foreign('conte_id')->references('id')->on('contes');
+            // $table->foreign('mot_cle_id')->references('id')->on('mot_cles');
+            $table->foreignId('conte_id')->constrained();
+            $table->foreignId('mot_cle_id')->constrained();
         });
     }
 
@@ -28,6 +30,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('conte_mot_cle');
         Schema::dropIfExists('mot_cles');
     }
 };

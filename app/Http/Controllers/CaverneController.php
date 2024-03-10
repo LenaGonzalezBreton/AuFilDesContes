@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Caverne;
 use App\Http\Requests\StoreCaverneRequest;
 use App\Http\Requests\UpdateCaverneRequest;
+use App\Models\Conte;
+use App\Providers\ReponseApi;
+use Throwable;
 
 class CaverneController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index() //Get caverne
     {
         //
+        try {
+            $reponse = ReponseApi::ReponseAllowed(Caverne::all());
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 
     /**
@@ -30,14 +40,35 @@ class CaverneController extends Controller
     public function store(StoreCaverneRequest $request)
     {
         //
+
+        // try {
+        //     $caverne = Caverne::create([
+        //         'titre_caverne' => $request['titre_caverne'],
+        //         'intro_caverne' => $request['intro_caverne'],
+        //         'image_caverne' => $request['image_caverne']
+        //     ]);
+        //     $caverne->save();
+        //     $reponse = ReponseApi::ReponseAllowed('');
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Caverne $caverne)
+    public function show(int $id) //cavernes/{idCaverne} 
     {
         //
+        // try {
+        //     $reponse = ReponseApi::ReponseAllowed(Caverne::find($id));
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 
     /**
@@ -46,6 +77,7 @@ class CaverneController extends Controller
     public function edit(Caverne $caverne)
     {
         //
+
     }
 
     /**
@@ -54,6 +86,18 @@ class CaverneController extends Controller
     public function update(UpdateCaverneRequest $request, Caverne $caverne)
     {
         //
+        // try {
+        //     $cav = Caverne::find($caverne);
+        //     $cav->titre_caverne = $request['titre_caverne'];
+        //     $cav->intro_caverne = $request['intro_caverne'];
+        //     $cav->image_caverne = $request['image_caverne'];
+        //     $caverne->save();
+        //     $reponse = ReponseApi::ReponseAllowed('');
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 
     /**
@@ -62,5 +106,13 @@ class CaverneController extends Controller
     public function destroy(Caverne $caverne)
     {
         //
+        // try {
+        //     Caverne::destroy($caverne);
+        //     $reponse = ReponseApi::ReponseAllowed('');
+        //     return json_encode($reponse);
+        // } catch (Throwable $error) {
+        //     $reponse = ReponseApi::ReponseReject($error);
+        //     return json_encode($reponse);
+        // }
     }
 }

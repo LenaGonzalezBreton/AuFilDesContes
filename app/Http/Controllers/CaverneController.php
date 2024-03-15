@@ -111,8 +111,22 @@ class CaverneController extends Controller
 
     public function caverne()
     {
+        $arrcavernes = [];
+        $cavernes = Caverne::all();
+        foreach ($cavernes as $caverne) {
+            $cav = [];
+            $cav['id'] = $caverne->id;
+            $cav['titre'] = $caverne->titre_caverne;
+            $cav['url_intro'] = $caverne->intro_caverne;
+            $cav['url_image'] = $caverne->image_caverne;
+
+
+            array_push($arrcavernes, $cav);
+        }
+
+
         try {
-            $reponse = ReponseApi::ReponseAllowed(Caverne::all());
+            $reponse = ReponseApi::ReponseAllowed($arrcavernes);
             return json_encode($reponse);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);

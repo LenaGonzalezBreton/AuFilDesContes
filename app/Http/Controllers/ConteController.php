@@ -80,15 +80,19 @@ class ConteController extends Controller
     {
         try {
             $conte = Conte::find($id);
-
             $note_conte = $conte->note_conte;
             $nombre_note_conte = $conte->nombre_note_conte;
-
             $conte->note_conte = $note_conte + $note;
             $conte->nombre_note_conte = $nombre_note_conte + 1;
-
             $conte->save();
-            $reponse = ReponseApi::ReponseAllowed($conte);
+
+            $newconte = Conte::find($id);
+            $arrconte = [];
+            $arrconte['nombre_note'] = $newconte->nombre_note_conte;
+            $arrconte['note'] = $newconte->note_conte;
+
+
+            $reponse = ReponseApi::ReponseAllowed($arrconte);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);
         }
@@ -97,8 +101,31 @@ class ConteController extends Controller
 
     public function conte()
     {
+        $arrcontes = [];
+        $contes = Conte::all();
+        foreach ($contes as $conte) {
+            $con = [];
+            $con['id'] = $conte->id;
+            $con['id_cavenre'] = $conte->caverne_id;
+            $con['titre'] = $conte->titre_conte;
+            $con['url_intro'] = $conte->intro_conte;
+            $con['url_image'] = $conte->image_conte;
+            $con['url_audio'] = $conte->histoire_conte;
+            $con['nombre_lecture'] = $conte->nombre_lecture_conte;
+            $con['nombre_note'] = $conte->nombre_note_conte;
+            $con['note'] = $conte->note_conte;
+            $con['nombre_note'] = $conte->nombre_note_conte;
+            $con['motcle'] = [];
+            foreach ($conte->motcles as $motcle) {
+                $mot = [];
+                $mot['titre'] = $motcle->nom_motcle;
+                array_push($con['motcle'], $mot);
+            }
+            array_push($arrcontes, $con);
+        }
+
         try {
-            $reponse = ReponseApi::ReponseAllowed(Conte::all());
+            $reponse = ReponseApi::ReponseAllowed($arrcontes);
             return json_encode($reponse);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);

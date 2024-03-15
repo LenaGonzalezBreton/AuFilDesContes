@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('mot_cles', function (Blueprint $table) {
             $table->id();
-            $table->string("libelle_conte");
+            $table->string("nom_motcle");
             $table->timestamps();
         });
 
         Schema::create('conte_mot_cle', function (Blueprint $table) {
-            // $table->foreign('conte_id')->references('id')->on('contes');
-            // $table->foreign('mot_cle_id')->references('id')->on('mot_cles');
             $table->foreignId('conte_id')->constrained();
             $table->foreignId('mot_cle_id')->constrained();
         });

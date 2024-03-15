@@ -21,9 +21,10 @@
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 ml-6 mr-6">
 
     <div class="relative flex flex-col justify-center items-center">
-        
-            <img class="w-3/5 rounded-lg aspect-square" src="/images/cavernes/{{$c->image_conte}}.jpg" alt="">
-            <img class="w-3/5 rounded-lg aspect-square" src="/images/playbtn" alt="">
+        <div class="justify-center text-center">
+            <img class="w-3/5 rounded-lg aspect-square absolute " src="/images/cavernes/{{$c->image_conte}}.jpg" alt="">
+            <a class="duration-300 ease-in-out relative text-8xl text-white h-4/6 hover:text-black hover:text-9xl hover:h-3/4" href=""><i class=" uil uil-play-circle "></i></a>
+        </div>
         <div class="bottom-0 w-full flex text-center place-items-center flex-col shadow">
             <h1 class="text-xl font-bold">{{$c->titre_conte}}</h1>
             <p>{{$c->intro_conte}}</p>

@@ -4,6 +4,10 @@
     Les Cavernes
 @endsection
 
+@section('cavernes')
+    block py-2 px-3 text-red-400 bg-red-700 rounded md:bg-transparent md:p-0
+@endsection
+
 @section('body')
 
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-6 ml-6 mr-6">

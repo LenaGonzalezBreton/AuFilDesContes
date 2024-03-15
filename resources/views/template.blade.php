@@ -14,7 +14,7 @@
 
     <body>
         <div>
-                <nav class="sticky top-0 bg-white dark:bg-gray-900 p-5 drop-shadow shadow-blue-600 border-b border-gray-200 dark:border-gray-600">
+                <nav class="sticky top-0 bg-white dark:bg-gray-900 p-5 drop-shadow shadow-blue-600 border-b border-gray-200 dark:border-gray-600 z-50">
                     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                         <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
                             <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo">

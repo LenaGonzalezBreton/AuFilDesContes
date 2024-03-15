@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Conte;
 use App\Http\Requests\StoreConteRequest;
@@ -26,14 +27,15 @@ class ConteController extends Controller
         try {
             $contes = Conte::all()->where('caverne_id', $request['idCaverne']);
             //foreach contes pour chaque contes, recuperer ses mots clés et ajouter dans un tableau
-            foreach($contes as $conte){
+            foreach ($contes as $conte) {
                 // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
                 $motcleconte = [];
                 $motcleconte = $conte->motcles;
                 array_push($motCle, $motcleconte);
-            }   
-            return view('conte/voir_contes',compact("contes", "motCle"));
-        } catch(Throwable $e){
+            }
+            $contes = Conte::with('motcles')->get();
+            return view('conte/voir_contes', compact("contes", "motCle"));
+        } catch (Throwable $e) {
             return redirect()->back();
         }
     }
@@ -69,7 +71,7 @@ class ConteController extends Controller
     {
         return view('', compact('conte'));
     }
-    
+
 
 
     /**
@@ -85,14 +87,13 @@ class ConteController extends Controller
      */
     public function destroy(Conte $conte)
     {
-        try{
+        try {
             Conte::destroy($conte);
             return redirect()->route('');
-        } catch(Throwable $e){
+        } catch (Throwable $e) {
             //retourner une alerte 
             return redirect()->back();
         }
-        
     }
 
     public function eval(string $id, string $note)
@@ -116,8 +117,34 @@ class ConteController extends Controller
 
     public function conte()
     {
+        $arrcontes = [];
+        $contes = Conte::all();
+        foreach ($contes as $conte) {
+            $con = [];
+            $con['id'] = $conte->id;
+            $con['id_caverne'] = $conte->caverne_id;
+            $con['titre'] = $conte->titre_conte;
+            $con['url_intro'] = $conte->intro_conte;
+            $con['url_image'] = $conte->image_conte;
+            $con['url_audio'] = $conte->histoire_conte;
+            $con['nombre_lecture'] = $conte->nombre_lecture_conte;
+            $con['nombre_note'] = $conte->nombre_note_conte;
+            $con['note'] = $conte->note_conte;
+            $con['mots_cle'] = [];
+
+            $motclecontearr = [];
+            $motclecontes = $conte->motcles;
+            foreach ($motclecontes as $motcle) {
+                $nom_motcle = $motcle->nom_motcle;
+                array_push($motclecontearr, $nom_motcle);
+            }
+            array_push($con['mots_cle'], $motclecontearr);
+            array_push($arrcontes, $con);
+        }
+        $contes = Conte::with('motcles')->get();
+
         try {
-            $reponse = ReponseApi::ReponseAllowed(Conte::all());
+            $reponse = ReponseApi::ReponseAllowed($arrcontes);
             return json_encode($reponse);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);

@@ -32,7 +32,7 @@ class VerifyToken
         //     mdp: null 
         // }
 
-        if ($token == '123465789') { // Le token de la requete viens de $request->bearerToken();
+        if ($token == $request->bearerToken()) { // Le token de la requete viens de $request->bearerToken();
             return $next($request);
         } else {
             // Ne génère pas des érreurs à chaque fois, 

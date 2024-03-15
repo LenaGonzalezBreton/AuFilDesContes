@@ -17,13 +17,7 @@ class CaverneController extends Controller
     public function index() //Get caverne
     {
         //
-        try {
-            $reponse = ReponseApi::ReponseAllowed(Caverne::all());
-            return json_encode($reponse);
-        } catch (Throwable $error) {
-            $reponse = ReponseApi::ReponseReject($error);
-            return json_encode($reponse);
-        }
+
     }
 
     /**
@@ -114,5 +108,16 @@ class CaverneController extends Controller
         //     $reponse = ReponseApi::ReponseReject($error);
         //     return json_encode($reponse);
         // }
+    }
+
+    public function caverne()
+    {
+        try {
+            $reponse = ReponseApi::ReponseAllowed(Caverne::all());
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
     }
 }

@@ -94,4 +94,15 @@ class ConteController extends Controller
         }
         return json_encode($reponse);
     }
+
+    public function conte()
+    {
+        try {
+            $reponse = ReponseApi::ReponseAllowed(Conte::all());
+            return json_encode($reponse);
+        } catch (Throwable $error) {
+            $reponse = ReponseApi::ReponseReject($error);
+            return json_encode($reponse);
+        }
+    }
 }

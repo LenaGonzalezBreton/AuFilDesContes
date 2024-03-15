@@ -13,7 +13,6 @@ class MotCleController extends Controller
      */
     public function index()
     {
-        //
     }
 
     /**

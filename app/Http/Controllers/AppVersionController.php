@@ -68,8 +68,12 @@ class AppVersionController extends Controller
 
     public function AppConf()
     {
+        $appVersion = AppVersion::all()->first();
+        $v = [];
+        $v['version'] = $appVersion->version;
+
         try {
-            $reponse = ReponseApi::ReponseAllowed(AppVersion::all()->first());
+            $reponse = ReponseApi::ReponseAllowed($v);
             return json_encode($reponse);
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);

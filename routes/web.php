@@ -44,7 +44,4 @@ Route::get('/contes', function () {
     return view('conte/voir_contes');
 })->name('contes');
 
-Route::get('/cavernes', function () {
-    return view('caverne/voir_cavernes');
-})->name('cavernes');
 //dtyyeeyefyteyuectyevrtyvretiygrtrferetrgretrèigrebretuibrebtier

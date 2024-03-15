@@ -20,7 +20,7 @@ class CaverneController extends Controller
         //
         try {
             $cavernes = caverne::all();
-            return view('voir_cavernes', compact('cavernes'));
+            return view('caverne/voir_cavernes', compact('cavernes'));
         } catch (Throwable $error) {
             return redirect()->back();
         }

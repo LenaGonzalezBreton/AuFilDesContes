@@ -28,16 +28,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-// AppVersion Controller
-Route::get('/app-conf', [AppVersionController::class, 'AppConf'])->middleware(VerifyToken::class);
-Route::post('/deploy-release/{newVersion}', [AppVersionController::class, 'DeployRelease'])->middleware(VerifyDeployToken::class);
-// Conte Controller
-
-Route::post('/conte/{id}/eval/{note}', [ConteController::class, 'eval'])->middleware(VerifyToken::class);
-
-
-
 Route::resources([
     'caverne' => CaverneController::class,
     'conte' => ConteController::class,

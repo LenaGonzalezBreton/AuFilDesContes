@@ -22,9 +22,9 @@
                 </span>
             </button>
         </div>
-        <div class="absolute flex flex-row w-full justify-end text-4xl top-3 gap-5 ">
-            <a href=""><i class="uil uil-edit"></i></a>
-            <a href=""><i class="uil uil-times-circle"></i></a>
+        <div class="absolute flex flex-row w-full justify-end text-4xl top-3 gap-0">
+            <a class="bg-slate-200/80" href=""><i class="uil uil-edit"></i></a>
+            <a class="bg-slate-200/80" href=""><i class=" text-red-600 font-black uil uil-times-circle"></i></a>
         </div>
     </div>
 

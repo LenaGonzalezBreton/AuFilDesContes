@@ -15,7 +15,7 @@
 
     <body>
         <div>
-                <nav class="sticky top-0 bg-red-800  drop-shadow shadow-blue-600 border-b border-gray-200">
+                <nav class="sticky top-0 bg-red-800  drop-shadow shadow-blue-600 border-b border-gray-200 z-50">
                     <div class=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                         <a href="{{route('dashboard')}}" class=" hover:animate-spin flex items-center space-x-3 rtl:space-x-reverse ">
                             <img src="{{asset('assets/images/logo.png')}}" class="rounded-full bg-white size-16" alt="Flowbite Logo">
@@ -39,7 +39,7 @@
                                     <a href="{{route('contes')}}" class="@yield('contes', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')">Contes</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('cavernes')}}" class="@yield('cavernes', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')">Cavernes</a>
+                                    <a href="{{route('caverne.index')}}" class="@yield('cavernes', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')">Cavernes</a>
                                 </li>
                             </ul>
                         </div>

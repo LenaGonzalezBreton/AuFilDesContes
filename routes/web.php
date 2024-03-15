@@ -24,10 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::resources([
     'caverne' => CaverneController::class,
     'conte' => ConteController::class,
@@ -35,3 +31,19 @@ Route::resources([
     'motcle' => MotCleController::class,
     'page' => PageController::class,
 ]);
+
+Route::get('/', function () {
+    return view('dashboard');
+})->name('dashboard');
+
+Route::get('/mots-clefs', function () {
+    return view('mot_clef/voir_mots_clefs');
+})->name('mots-clefs');
+
+Route::get('/contes', function () {
+    return view('conte/voir_contes');
+})->name('contes');
+
+Route::get('/cavernes', function () {
+    return view('caverne/voir_cavernes');
+})->name('cavernes');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Caverne;
 use App\Models\MotCle;
 use App\Http\Requests\StoreMotCleRequest;
 use App\Http\Requests\UpdateMotCleRequest;
@@ -13,6 +14,12 @@ class MotCleController extends Controller
      */
     public function index()
     {
+        try {
+            $mots_clefs = motcle::all();
+            return view('/mot_clef/voir_mots_clefs', compact('mots_clefs'));
+        } catch (Throwable $error) {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -58,8 +65,15 @@ class MotCleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(MotCle $motCle)
+    public function destroy( $motCle)
     {
-        //
+        try {
+
+            MotCle::destroy($motCle);
+            return redirect()->back();
+
+        } catch (Throwable $error) {
+            return redirect()->back();
+        }
     }
 }

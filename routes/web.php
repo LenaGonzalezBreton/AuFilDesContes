@@ -11,6 +11,7 @@ use App\Http\Middleware\VerifyDeployToken;
 use App\Http\Middleware\VerifyToken;
 use App\Models\AppVersion;
 use App\Models\LivreOr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,8 +44,12 @@ Route::get('/mots-clefs', function () {
 Route::get('/contes', function () {
     return view('conte/voir_contes');
 })->name('contes');
-
-Route::get('/cavernes', function () {
-    return view('caverne/voir_cavernes');
-})->name('cavernes');
 //dtyyeeyefyteyuectyevrtyvretiygrtrf
+
+Route::post('/store-id', function (Request $request) {
+    $id = $request->input('id');
+    session()->forget('id'); // Supprime la clé 'id' de la session
+    // Stocke le nouvel ID dans la session
+    session()->put('id', $id);
+    return response()->json(['success' => true]);
+});

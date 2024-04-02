@@ -7,7 +7,7 @@ use App\Http\Requests\StoreCaverneRequest;
 use App\Http\Requests\UpdateCaverneRequest;
 use App\Models\Conte;
 use App\Providers\ReponseApi;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class CaverneController extends Controller
@@ -33,7 +33,7 @@ class CaverneController extends Controller
     {
         //
         try {
-            return view('ajouter_modifier_caverne');
+            return view('/caverne/ajouter_modifier_caverne');
         } catch (Throwable $error) {
             return redirect()->back();
         }
@@ -46,13 +46,19 @@ class CaverneController extends Controller
     {
         //
         try {
+            $completPath = $request->image->store(config('images.path'), 'images');
+            $completnameFile = explode("/", $completPath);
+
+            $completPathIntro = $request->intro->store(config('intros.path'), 'intros');
+            $introPath = explode("/", $completPathIntro);
+
             $caverne = Caverne::create([
                 'titre_caverne' => $request['titre_caverne'],
-                'intro_caverne' => $request['intro_caverne'],
-                'image_caverne' => $request['image_caverne']
+                'intro_caverne' => $introPath[1],
+                'image_caverne' => $completnameFile[1]
             ]);
             $caverne->save();
-            return redirect()->back();
+            return redirect()->route('caverne.index');
         } catch (Throwable $error) {
             return redirect()->back();
         }
@@ -68,12 +74,12 @@ class CaverneController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Caverne $caverne)
+    public function edit($caverne)
     {
         //
         try {
             $cav = Caverne::find($caverne);
-            return view('voir_cavernes', compact('cav'));
+            return view('caverne/ajouter_modifier_caverne', compact('cav'));
         } catch (Throwable $error) {
             return redirect()->back();
         }
@@ -84,14 +90,40 @@ class CaverneController extends Controller
      */
     public function update(UpdateCaverneRequest $request, Caverne $caverne)
     {
-
         try {
-            $cav = Caverne::find($caverne);
-            $cav->titre_caverne = $request['titre_caverne'];
-            $cav->intro_caverne = $request['intro_caverne'];
-            $cav->image_caverne = $request['image_caverne'];
-            $caverne->save();
-            return redirect()->back();
+            $cav = Caverne::find($caverne->id);
+            $oldTitre = $caverne->titre_caverne;
+            $oldImage = $caverne->image_caverne;
+            $oldIntro = $caverne->intro_caverne;
+
+            if ($request->titre_caverne != $oldTitre) {
+                $cav->titre_caverne = $request->titre_caverne;
+            } else {
+                $cav->titre_caverne = $oldTitre;
+            }
+
+            if ($request->image) {
+
+                $completPath = $request->image->store(config('images.path'), 'images');
+                $completnameFile = explode("/", $completPath);
+                $cav->image_caverne = $completnameFile[1];
+                $img = 'public/images/' . $oldImage;
+                Storage::delete($img);
+            } else {
+                $cav->image_caverne = $oldImage;
+            }
+
+            if ($request->intro) {
+                $completPathIntro = $request->intro->store(config('intros.path'), 'intros');
+                $introPath = explode("/", $completPathIntro);
+                $cav->intro_caverne = $introPath[1];
+                $intro = 'public/intros/' . $oldIntro;
+                Storage::delete($intro);
+            } else {
+                $cav->intro_caverne = $oldIntro;
+            }
+            $cav->save();
+            return redirect()->route('caverne.index');
         } catch (Throwable $error) {
         }
     }
@@ -101,13 +133,35 @@ class CaverneController extends Controller
      */
     public function destroy(Caverne $caverne)
     {
-        try {
-            Caverne::destroy($caverne);
-            return redirect()->back();
-        } catch (Throwable $error) {
-            return redirect()->back();
+        $cav = Caverne::find($caverne->id);
+
+        $img = 'public/images/' . $cav->image_caverne;
+        $intro = 'public/intros/' . $cav->intro_caverne;
+        $contes = $cav->conte;
+        foreach ($contes as $conte) {
+            $motcles = $conte->motcles;
+            foreach ($motcles as $motcle) {
+                $motcle->contes()->detach($conte);
+            }
+            Conte::destroy($conte->id);
         }
+        caverne::destroy($cav->id);
+        Storage::delete($img);
+        Storage::delete($intro);
+
+
+
+        // try {
+        // } catch (Throwable $error) {
+        // }
     }
+
+
+
+
+
+
+
 
     public function caverne()
     {

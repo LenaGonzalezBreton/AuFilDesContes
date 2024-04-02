@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Conte;
 use App\Http\Requests\StoreConteRequest;
 use App\Http\Requests\UpdateConteRequest;
@@ -21,11 +22,11 @@ class ConteController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index($idCaverne)
     {
         $motCle = [];
         try {
-            $contes = Conte::all()->where('caverne_id', $request['idCaverne']);
+            $contes = Conte::all()->where('caverne_id', $idCaverne);
             //foreach contes pour chaque contes, recuperer ses mots clés et ajouter dans un tableau
             foreach ($contes as $conte) {
                 // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
@@ -33,12 +34,37 @@ class ConteController extends Controller
                 $motcleconte = $conte->motcles;
                 array_push($motCle, $motcleconte);
             }
-            $contes = Conte::with('motcles')->get();
-            return view('conte/voir_contes', compact("contes", "motCle"));
+            //$contes = Conte::with('motcles')->get();
+            //dd($contes, $request['idCaverne']);
+            return view('conte/voir_contes', compact("contes", "motCle", "idCaverne"));
         } catch (Throwable $e) {
             return redirect()->back();
         }
     }
+    /**
+     * Recherche les contes à partir du titre ou des mots clés
+     */
+    public function rechercheConteCaverne(Request $request){
+        $motCle = [];
+        // try {
+            $contes = Conte::where('caverne_id', $request['idCaverne'])->where('titre_conte', 'LIKE', "%".$request['search']."%")->get();
+            // $contes = Conte::all()->where('caverne_id', $request['idCaverne']);
+            // $newconte = $contes->where('titre_caverne', $request['search']);
+            // dd($contes);
+            foreach ($contes as $conte) {
+                // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
+                $motcleconte = [];
+                $motcleconte = $conte->motcles;
+                array_push($motCle, $motcleconte);
+            }
+            // dd($contes, $motCle);
+            // return view('conte/voir_contes', compact("contes", "motCle"));
+            return view('conte/voir_contes', ['idCaverne' => $request['idCaverne']])->with(["contes"=>$contes, "motCle"=>$motCle]);
+        // } catch(Throwable $e) {
+            // return redirect()->back();
+        // }
+    }
+
 
     /**
      * Show the form for creating a new resource.

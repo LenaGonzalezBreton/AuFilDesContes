@@ -12,7 +12,7 @@
     <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
         <span class="font-medium">
             <div class="justify-center items-center flex">
-                <form method="post" action="{{route('rechercheConteCaverne')}}">
+                <form method="post" action="{{route('rechercheConteCaverne', $contes)}}">
                     @csrf
                     {{-- <input name="idCaverne" type="hidden" value="{{$idCaverne}}"> --}}
                     <input name="search" class="w-fit h-fit center border-2" placeholder="Recherche ...">

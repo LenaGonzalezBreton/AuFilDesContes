@@ -60,7 +60,7 @@ class ConteController extends Controller
     public function rechercheConteCaverne(Request $request, array $contes)
     {
         // $contes = ;//requete 
-        
+        dd($contes);
         $contesRecherche = $contes->where('titre_conte', 'LIKE', "%" . $request->search . "%");
 
         // $motCle = [];

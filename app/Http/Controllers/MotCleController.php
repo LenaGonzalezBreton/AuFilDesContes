@@ -64,12 +64,11 @@ class MotCleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateMotCleRequest $request)
+    public function update(UpdateMotCleRequest $request, string $id)
     {
-//        dd('tests');
-//        $motClef = MotCle::find($id);
-//        $motClef->nom_motcle = $request->input('nom_motclef');
-//        dd($motClef->nom_motcle);
+        $mot = MotCle::find($id);
+        $mot->nom_motcle = $request->nom_motclef;
+        $mot->save();
         return redirect()->route('motcle.index');
     }
 

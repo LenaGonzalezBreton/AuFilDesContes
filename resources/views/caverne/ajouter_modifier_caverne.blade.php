@@ -21,15 +21,15 @@
         <div class="flex flex-row justify-start m-5"><form action="{{route('caverne.index')}}"><button type="submit"><i class="uil uil-corner-down-left text-white text-xl  "></i></button></form></div>
         @if(isset($cav))<p class="text-white">Vous pouvez laisser vide pour garder les anciennes données </p>@endif
 
-        <form class="max-w-sm mx-auto bg-red-800 p-4" action="<?php echo $action; ?>" method="POST" enctype="multipart/form-data">
+        <form class="max-w-5xl mx-auto bg-red-800 p-4" action="<?php echo $action; ?>" method="POST" enctype="multipart/form-data">
           {{-- {{route('caverne.store')}} --}}
           @csrf
           @if(isset($cav)) @method('PUT') @else @method('POST') @endif
            
-            <div class="mb-5 flex flex-col justify-center">
+            <div class="mb-5 flex flex-col justify-center items-center">
 
               <label for="email" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Image de la caverne</label>
-              <img id="img_url" src="/storage/images/cavernes/<?php if(isset($cav)){echo($cav->image_caverne);}else{echo('add.png');}?>" alt="" srcset="">
+              <img id="img_url" class="w-2/6" src="/storage/images/cavernes/<?php if(isset($cav)){echo($cav->image_caverne);}else{echo('add.png');}?>" alt="" srcset="">
 
               <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-5">Nom de la caverne</label>
               <input type="text" name="titre_caverne" id="text" value="<?php if(isset($cav)){echo($cav->titre_caverne);}else{echo("");}?>" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-red-400 dark:border-red-300 dark:placeholder-red-800 dark:text-red-800 dark:focus:ring-red-300 dark:focus:border-red-300" placeholder="Nom de la caverne" required />

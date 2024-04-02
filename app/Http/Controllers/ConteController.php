@@ -79,7 +79,11 @@ class ConteController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            return view('conte/ajouter_modifier_conte');
+        } catch (Throwable $error) {
+            dd($error);
+        }
     }
 
     /**
@@ -88,6 +92,12 @@ class ConteController extends Controller
     public function store(StoreConteRequest $request)
     {
         //
+        try {
+            dd($request);
+        } catch (\Throwable $error) {
+            //throw $th;
+            dd($error);
+        }
     }
 
     /**

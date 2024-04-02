@@ -41,7 +41,7 @@ class MotCleController extends Controller
             'nom_motcle' => $request->input('nom_motclef')
         ]);
         $motcle->save();
-        return redirect()->back();
+        return redirect()->route('motcle.index');
     }
 
     /**
@@ -66,10 +66,11 @@ class MotCleController extends Controller
      */
     public function update(UpdateMotCleRequest $request)
     {
-        dd('tests');
+//        dd('tests');
 //        $motClef = MotCle::find($id);
 //        $motClef->nom_motcle = $request->input('nom_motclef');
 //        dd($motClef->nom_motcle);
+        return redirect()->route('motcle.index');
     }
 
     /**

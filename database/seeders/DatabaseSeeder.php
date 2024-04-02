@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         Caverne::factory(10)->create();
         Conte::factory(10)->create();
         LivreOr::factory(10)->create();
-        MotCle::factory(10)->create();
+        MotCle::factory(1000)->create();
 
         foreach (Conte::all() as $conte) {
             $mot = \App\Models\MotCle::inRandomOrder()->first();

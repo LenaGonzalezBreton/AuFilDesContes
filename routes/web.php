@@ -41,10 +41,13 @@ Route::get('/mots-clefs', function () {
     return view('mot_clef/voir_mots_clefs');
 })->name('mots-clefs');
 
+Route::get('/ajouter-mot-clef', function () {
+    return view('mot_clef/ajouter_modifier_mot_clef');
+})->name('ajouter-mot-clef');
+
 Route::get('/contes', function () {
     return view('conte/voir_contes');
 })->name('contes');
-//dtyyeeyefyteyuectyevrtyvretiygrtrf
 
 Route::post('/store-id', function (Request $request) {
     $id = $request->input('id');

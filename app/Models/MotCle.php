@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class MotCle extends Model
 {
     use HasFactory;
+    protected $fillable =[
+        'nom_motcle']
+    ;
 
     public function contes()
     {

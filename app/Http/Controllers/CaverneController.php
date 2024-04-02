@@ -171,8 +171,8 @@ class CaverneController extends Controller
             $cav = [];
             $cav['id'] = $caverne->id;
             $cav['titre'] = $caverne->titre_caverne;
-            $cav['url_intro'] = $caverne->intro_caverne;
-            $cav['url_image'] = $caverne->image_caverne;
+            $cav['url_intro'] = '\storage\app\public\intros\\' . $caverne->intro_caverne;
+            $cav['url_image'] = '\storage\app\public\images\\' . $caverne->image_caverne;
             array_push($arrcavernes, $cav);
         }
         try {

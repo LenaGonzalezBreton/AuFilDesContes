@@ -22,7 +22,7 @@ class StoreCaverneRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'image' => 'required|image|dimensions:min_width=100,min_height=100',
         ];
     }
 }

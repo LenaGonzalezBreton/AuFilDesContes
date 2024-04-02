@@ -19,7 +19,7 @@
     <body class="bg-gray-700">
         <div>
                 <nav class="sticky top-0 bg-red-800  drop-shadow shadow-blue-600 z-50">
-                    <div class=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+                    <div class=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
                         <a href="{{route('dashboard')}}" class=" hover:animate-spin flex items-center space-x-3 rtl:space-x-reverse ">
                             <img src="{{asset('assets/images/logo.png')}}" class="rounded-full bg-white size-16" alt="Flowbite Logo">
                         </a>

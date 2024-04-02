@@ -6,6 +6,7 @@ use App\Models\Caverne;
 use App\Models\MotCle;
 use App\Http\Requests\StoreMotCleRequest;
 use App\Http\Requests\UpdateMotCleRequest;
+use Throwable;
 
 class MotCleController extends Controller
 {
@@ -67,9 +68,9 @@ class MotCleController extends Controller
     public function update(UpdateMotCleRequest $request)
     {
         dd('tests');
-//        $motClef = MotCle::find($id);
-//        $motClef->nom_motcle = $request->input('nom_motclef');
-//        dd($motClef->nom_motcle);
+        //        $motClef = MotCle::find($id);
+        //        $motClef->nom_motcle = $request->input('nom_motclef');
+        //        dd($motClef->nom_motcle);
     }
 
     /**
@@ -81,7 +82,6 @@ class MotCleController extends Controller
 
             MotCle::destroy($motCle);
             return redirect()->back();
-
         } catch (Throwable $error) {
             return redirect()->back();
         }

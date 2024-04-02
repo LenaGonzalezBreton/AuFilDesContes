@@ -14,7 +14,7 @@
             <div class="justify-center items-center flex">
                 <form method="post" action="{{route('rechercheConteCaverne')}}">
                     @csrf
-                    <input name="idCaverne" type="hidden" value="{{$idCaverne}}">
+                    {{-- <input name="idCaverne" type="hidden" value="{{$idCaverne}}"> --}}
                     <input name="search" class="w-fit h-fit center border-2" placeholder="Recherche ...">
                     <button class=" bg-white text-gray border-2 border-r-2 border-b-2 hover:border-r-4 hover:border-b-4 hover:border-l hover-t">Rechercher</button>
                 </form>
@@ -29,15 +29,14 @@
     <?php 
     $motCle = $c->motcles;
     ?>
-    <div class="relative flex flex-col justify-center items-center">
+    <div class="relative flex flex-col justify-center items-center bg-white min-h-[550px]">
         <div class="justify-center flex items-center relative place-items-center">
-            <img class="w-3/5 rounded-lg aspect-square  " src="/images/cavernes/{{$c->image_conte}}.jpg" alt="">
+            <img class="max-w-full" src="storage/images/{{$c->image_conte}}" alt="">
             <a class="flex justify-center items-center inline-bloc align-middle w-3/5 duration-300 ease-in-out absolute text-8xl text-white h-4/6 hover:text-black hover:text-9xl hover:h-3/4" href=""><i class=" uil uil-play-circle "></i></a>
         </div>
-        <div class="bottom-0 w-full flex text-center place-items-center flex-col shadow">
+        <div class="bottom-0 w-full flex text-center place-items-center flex-col shadow absolute">
             <h1 class="text-xl font-bold">{{$c->titre_conte}}</h1>
             <p>{{$c->intro_conte}}</p>
-            {{-- <p>{{$motCle['libelle_conte']}}</p> --}}
         </div>
     </div>
     @endforeach

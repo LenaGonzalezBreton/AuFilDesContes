@@ -46,21 +46,24 @@ class CaverneController extends Controller
     {
         //
         try {
-            $completPath = $request->image->store(config('image_caverne.path'), 'images');
+            $completPath = $request->image->store(config('imagescav.path'), 'public');
             $completnameFile = explode("/", $completPath);
 
-            $completPathIntro = $request->intro->store(config('intros.path'), 'intros');
+            $completPathIntro = $request->intro->store(config('introcav.path'), 'public');
             $introPath = explode("/", $completPathIntro);
+
 
             $caverne = Caverne::create([
                 'titre_caverne' => $request['titre_caverne'],
-                'intro_caverne' => $introPath[1],
-                'image_caverne' => $completnameFile[1]
+                'intro_caverne' => $introPath[2],
+                'image_caverne' => $completnameFile[2]
             ]);
+
             $caverne->save();
             return redirect()->route('caverne.index');
         } catch (Throwable $error) {
-            return redirect()->back();
+            dd($error);
+            // return redirect()->back();
         }
     }
 
@@ -104,20 +107,20 @@ class CaverneController extends Controller
 
             if ($request->image) {
 
-                $completPath = $request->image->store(config('images.path'), 'images');
+                $completPath = $request->image->store(config('imagescav.path'), 'public');
                 $completnameFile = explode("/", $completPath);
-                $cav->image_caverne = $completnameFile[1];
-                $img = 'public/images/' . $oldImage;
+                $cav->image_caverne = $completnameFile[2];
+                $img = '/public/images/cavernes/' . $oldImage;
                 Storage::delete($img);
             } else {
                 $cav->image_caverne = $oldImage;
             }
 
             if ($request->intro) {
-                $completPathIntro = $request->intro->store(config('intros.path'), 'intros');
+                $completPathIntro = $request->intro->store(config('introcav.path'), 'public');
                 $introPath = explode("/", $completPathIntro);
-                $cav->intro_caverne = $introPath[1];
-                $intro = 'public/intros/' . $oldIntro;
+                $cav->intro_caverne = $introPath[2];
+                $intro = '/public/sounds/cavernes/' . $oldIntro;
                 Storage::delete($intro);
             } else {
                 $cav->intro_caverne = $oldIntro;
@@ -133,27 +136,27 @@ class CaverneController extends Controller
      */
     public function destroy(Caverne $caverne)
     {
-        $cav = Caverne::find($caverne->id);
-
-        $img = 'public/images/' . $cav->image_caverne;
-        $intro = 'public/intros/' . $cav->intro_caverne;
-        $contes = $cav->conte;
-        foreach ($contes as $conte) {
-            $motcles = $conte->motcles;
-            foreach ($motcles as $motcle) {
-                $motcle->contes()->detach($conte);
+        try {
+            $cav = Caverne::find($caverne->id);
+            // on supprime depuis le /storage/app donc la suite est /public/...
+            $img = "/public/images/cavernes/" . $cav->image_caverne;
+            $intro = "/public/sounds/cavernes/" . $cav->intro_caverne;
+            $contes = $cav->conte;
+            foreach ($contes as $conte) {
+                $motcles = $conte->motcles;
+                foreach ($motcles as $motcle) {
+                    $motcle->contes()->detach($conte);
+                }
+                Conte::destroy($conte->id);
             }
-            Conte::destroy($conte->id);
+
+            Storage::delete($img);
+            Storage::delete($intro);
+
+            caverne::destroy($cav->id);
+        } catch (Throwable $error) {
+            dd($error);
         }
-        caverne::destroy($cav->id);
-        Storage::delete($img);
-        Storage::delete($intro);
-
-
-
-        // try {
-        // } catch (Throwable $error) {
-        // }
     }
 
 

@@ -52,7 +52,7 @@ Route::get('/contes', function () {
 })->name('contes');
 
 Route::post('/caverne/conte', [\App\Http\Controllers\ConteController::class, "rechercheConteCaverne"])->name("rechercheConteCaverne");
-
+Route::get('/caverne/{idCaverne}/conte', [\App\Http\Controllers\ConteController::class, "indexConteCaverne"])->name("indexConteCaverne");
 Route::post('/store-id', function (Request $request) {
     $id = $request->input('id');
     session()->forget('id'); // Supprime la clé 'id' de la session

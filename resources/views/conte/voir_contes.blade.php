@@ -18,6 +18,7 @@
                     <input name="search" class="w-fit h-fit center border-2" placeholder="Recherche ...">
                     <button class=" bg-white text-gray border-2 border-r-2 border-b-2 hover:border-r-4 hover:border-b-4 hover:border-l hover-t">Rechercher</button>
                 </form>
+                <label> parmi les {{$nbContes}} contes.</label>
             </div>
         </span>
     </div>

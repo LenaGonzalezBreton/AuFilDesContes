@@ -27,11 +27,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::resources([
     'caverne' => CaverneController::class,
-    'conte' => ConteController::class,
     'livreor' => LivreOrController::class,
     'motcle' => MotCleController::class,
     'page' => PageController::class,
 ]);
+
+Route::resources([
+    'conte' => ConteController::class
+], [
+    'except' => "index"
+]);
+
+Route::get('/caverne/{idCaverne}/conte', [App\Http\Controllers\ConteController::class, 'index'])->name("conte.index");
 
 Route::get('/', function () {
     return view('dashboard');
@@ -48,6 +55,7 @@ Route::get('/ajouter-mot-clef', function () {
 Route::get('/contes', function () {
     return view('conte/voir_contes');
 })->name('contes');
+Route::post('/caverne/{idCaverne}/conte', [\App\Http\Controllers\ConteController::class, "rechercheConteCaverne"])->name("rechercheConteCaverne");
 
 Route::post('/store-id', function (Request $request) {
     $id = $request->input('id');

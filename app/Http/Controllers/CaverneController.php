@@ -46,7 +46,7 @@ class CaverneController extends Controller
     {
         //
         try {
-            $completPath = $request->image->store(config('images.path'), 'images');
+            $completPath = $request->image->store(config('image_caverne.path'), 'images');
             $completnameFile = explode("/", $completPath);
 
             $completPathIntro = $request->intro->store(config('intros.path'), 'intros');

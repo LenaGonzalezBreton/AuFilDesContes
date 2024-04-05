@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Conte;
@@ -14,7 +13,6 @@ use Laravel\Prompts\Note;
 use PhpParser\Node\Scalar\String_;
 use PHPUnit\Event\Code\Throwable;
 use Ramsey\Uuid\Type\Integer;
-
 use function PHPSTORM_META\map;
 
 class ConteController extends Controller
@@ -57,11 +55,11 @@ class ConteController extends Controller
     /**
      * Recherche les contes à partir du titre ou des mots clés
      */
-    public function rechercheConteCaverne(Request $request, array $contes)
+    public function rechercheConteCaverne(Request $request)
     {
         // $contes = ;//requete 
-        dd($contes);
-        $contesRecherche = $contes->where('titre_conte', 'LIKE', "%" . $request->search . "%");
+        
+        // $contesRecherche = $contes->where('titre_conte', 'LIKE', "%" . $request->search . "%");
 
         // $motCle = [];
         // try {
@@ -69,7 +67,7 @@ class ConteController extends Controller
         // $contes = Conte::all()->where('caverne_id', $request['idCaverne']);
         // $newconte = $contes->where('titre_caverne', $request['search']);
         // dd($contes);
-        //c      foreach ($contes as $conte) {
+        //     foreach ($contes as $conte) {
             // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
             // $motcleconte = [];
             // $motcleconte = $conte->motcles;

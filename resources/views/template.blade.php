@@ -9,6 +9,7 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
         <link rel="stylesheet" href="css/style.css">
+        <link rel="shortcut icon" href="./assets/images/logo.png" type="image/x-icon">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LivreOr;
 use App\Http\Requests\StoreLivreOrRequest;
 use App\Http\Requests\UpdateLivreOrRequest;
+use Illuminate\Http\Request;
 
 class LivreOrController extends Controller
 {
@@ -13,7 +14,11 @@ class LivreOrController extends Controller
      */
     public function index()
     {
-        //
+        // Récupérer tous les messages vérifiés
+        $messages = Message::where('is_verified_livreor', true)->get();
+
+        // Passer les messages à la vue
+        return view('welcome', ['messages' => $messages]);
     }
 
     /**
@@ -27,9 +32,15 @@ class LivreOrController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLivreOrRequest $request)
+    public function store(Request $request)
     {
-        //
+        $post = new LivreOr();
+        $post->prenom = $request->input('prenom');
+        $post->commentaire_livreor = $request->input('message');
+        $post->is_verified_livreor = false;
+        $post->save();
+
+        return redirect('/')->with('status', 'Facture ajoutée.');
     }
 
     /**

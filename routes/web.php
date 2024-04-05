@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LivreOrController;
+use App\Models\LivreOr;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $livres = LivreOr::where('is_verified_livreor',1)->get();
+    return view('welcome',compact('livres'));
 });
+
+Route::post('/addLivreOr', [LivreOrController::class, 'store'])->name('addLivreOr');

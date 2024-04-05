@@ -29,7 +29,6 @@
         }
 
 
-
         .custom-scrollbar::-webkit-scrollbar {
             display: none; /* Masquer la barre de défilement */
         }
@@ -40,7 +39,8 @@
 <body class="flex flex-col justify-center items-center overflow-y-auto custom-scrollbar">
 
 <!--#region Bouton bounce  -->
-<a href="#Accueil" class="fixed bottom-5 right-5 rounded-full border border-2 border-white p-2 animate-bounce bg-white bg-opacity-50">
+<a href="#Accueil"
+   class="fixed bottom-5 right-5 rounded-full border border-2 border-white p-2 animate-bounce bg-white bg-opacity-50">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
          class="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5 12 3m0 0 7.5 7.5M12 3v18"/>
@@ -55,8 +55,8 @@
         <div class="flex gap-4">
             <a class="hover:underline" href="#info">Informations</a>
             <a class="hover:underline" href="#maj">Mise à jours</a>
-            <a class="hover:underline" href="Livre">Livre d'or</a>
-            <a class="hover:underline" href="contact">Contact</a>
+            <a class="hover:underline" href="#Livre">Livre d'or</a>
+            <a class="hover:underline" href="#contact">Contact</a>
         </div>
     </div>
 
@@ -64,7 +64,7 @@
         <div class="text-6xl dancing-script-base">Au fil des contes</div>
         <div class="text-3xl abhaya-libre-medium">Parce que chaque enfant mérite un conte qui guérit.</div>
         <div class="text-3xl abhaya-libre-medium">Écoutez, surmontez.</div>
-        <a href="{{ route('telecharger') }}"
+        <a href="#"
            class="mt-8 rounded-full border border-2 border-white bg-white bg-opacity-50 flex flex-col items-center w-48 py-1 px-2 mt-4">
             <div class="text-xl">Télécharger</div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -124,104 +124,39 @@
     <!--#endregion -->
 
     <!--#region Livre d'or  -->
-    <div id="livre" class="flex flex-col items-center text-4xl mt-4">Livre d'or</div>
-
-
-    <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 ">
+    <div id="Livre" class="flex flex-col items-center mb-16">
+    <div class="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8">
         <div class="flex items-center justify-between mb-4">
-            <h5 class="text-xl font-bold leading-none text-gray-900 dancing-script-base">Qu'est ce que les enfants pensent de nous 📜?</h5>
+            <h5 class="text-xl font-bold leading-none text-gray-900 dancing-script-base">Qu'est ce que les enfants
+                pensent de nous 📜?</h5>
         </div>
         <div class="flow-root">
             <ul role="list" class="divide-y divide-gray-200">
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                        </div>
-                        <div class="flex-1 min-w-0 ms-4">
-                            <p class="text-sm font-medium text-gray-900 truncate dancing-script-base ">
-                                Augustin ✨
-                            </p>
-                            <p class="text-sm text-gray-500 truncate">
-                                Grâce à Au fil des contes j’ai plus de facilité à m’endormir le soir. Mon histoire préféré est celle du lièvre et de la tortue
-                            </p>
-                        </div>
+                @foreach($livres as $livre)
+                    <li class="py-3 sm:py-4">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0">
+                                </div>
+                                <div class="flex-1 min-w-0 ms-4">
+                                    <p class="text-sm font-medium text-gray-900 truncate dancing-script-base">
+                                        {{ $livre->prenom }} ✨
+                                    </p>
+                                    <p class="text-sm text-gray-500 truncate abhaya-libre-medium">
+                                        {{ $livre->commentaire_livreor }}
+                                    </p>
+                                </div>
+                            </div>
+                        </li>
 
-                    </div>
-                </li>
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center ">
-                        <div class="flex-shrink-0">
-                        </div>
-                        <div class="flex-1 min-w-0 ms-4">
-                            <p class="text-sm font-medium text-gray-900 truncate">
-                                Bonnie Green
-                            </p>
-                            <p class="text-sm text-gray-500 truncate">
-                                email@windster.com
-                            </p>
-                        </div>
-                        <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                            $3467
-                        </div>
-                    </div>
-                </li>
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                        </div>
-                        <div class="flex-1 min-w-0 ms-4">
-                            <p class="text-sm font-medium text-gray-900 truncate">
-                                Michael Gough
-                            </p>
-                            <p class="text-sm text-gray-500 truncate">
-                                email@windster.com
-                            </p>
-                        </div>
-                        <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                            $67
-                        </div>
-                    </div>
-                </li>
-                <li class="py-3 sm:py-4">
-                    <div class="flex items-center ">
-                        <div class="flex-shrink-0">
-                        </div>
-                        <div class="flex-1 min-w-0 ms-4">
-                            <p class="text-sm font-medium text-gray-900 truncate">
-                                Lana Byrd
-                            </p>
-                            <p class="text-sm text-gray-500 truncate">
-                                email@windster.com
-                            </p>
-                        </div>
-                        <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                            $367
-                        </div>
-                    </div>
-                </li>
-                <li class="pt-3 pb-0 sm:pt-4">
-                    <div class="flex items-center ">
-                        <div class="flex-shrink-0">
-                        </div>
-                        <div class="flex-1 min-w-0 ms-4">
-                            <p class="text-sm font-medium text-gray-900 truncate">
-                                Thomes Lean
-                            </p>
-                            <p class="text-sm text-gray-500 truncate">
-                                email@windster.com
-                            </p>
-                        </div>
-                        <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                            $2367
-                        </div>
-                    </div>
-                </li>
+                @endforeach
             </ul>
+            <div class="flex flex-col items-center ">
+                <button id="openModal_message" type="button" class="w-2/3 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-[#dc2626] focus:z-10 focus:ring-4 focus:ring-gray-100">Ecrire un message</button>
+            </div>
         </div>
     </div>
-
+    </div>
     <!--#endregion -->
-
 
     <!--#region Modal  -->
     <div id="modal" class="fixed inset-0 bg-white bg-opacity-25 flex justify-center items-center hidden">
@@ -277,6 +212,96 @@
         });
     </script>
     <!--#endregion -->
+    <!--#endregion -->
+
+    <!--#region Modal Message  -->
+    <div id="modal_message" class="fixed inset-0 bg-white bg-opacity-25 flex justify-center items-center hidden">
+        <div class="bg-white bg-opacity-35 backdrop-blur border border-2 border-white p-8 rounded shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Laisse nous un message !</h2>
+            <form action="{{route('addLivreOr')}}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label for="prenom" class="block text-sm font-medium text-gray-700">Prénom</label>
+                    <input type="text" id="prenom" name="prenom" class="mt-1 px-4 py-2 block w-full border rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block text-sm font-medium text-gray-700">Message (maximum 50 caractères)</label>
+                    <textarea required id="message" name="message" rows="3" maxlength="50" class="mt-1 px-4 py-2 block w-full border rounded-md"></textarea>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Envoyer</button>
+                    <button id="closeModal_message" type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded-md ml-2 hover:bg-gray-400">Annuler</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Attend que le DOM soit chargé
+        document.addEventListener('DOMContentLoaded', function () {
+            // Sélectionnez le bouton pour ouvrir la popup
+            var openModalButton = document.getElementById('openModal_message');
+            // Sélectionnez le bouton pour fermer la popup
+            var closeModalButton = document.getElementById('closeModal_message');
+            // Sélectionnez la div modale
+            var modal = document.getElementById('modal_message');
+            // Sélectionnez les champs de formulaire
+            var prenomInput = document.getElementById('prenom');
+            var messageInput = document.getElementById('message');
+
+            // Fonction pour vider les champs de formulaire
+            function clearFormFields() {
+                prenomInput.value = '';
+                messageInput.value = '';
+            }
+
+            // Ajoutez un écouteur d'événements pour le clic sur le bouton pour ouvrir la popup
+            openModalButton.addEventListener('click', function () {
+                modal.classList.remove('hidden'); // Afficher la popup
+            });
+
+            // Ajoutez un écouteur d'événements pour le clic sur le bouton pour fermer la popup
+            closeModalButton.addEventListener('click', function () {
+                modal.classList.add('hidden'); // Masquer la popup
+                clearFormFields(); // Vider les champs de formulaire
+            });
+        });
+    </script>
+
+
+    <!--#endregion -->
+
+    <!--#region Footer  -->
+
+
+    <footer class="bg-white bg-opacity-70 rounded-lg shadow m-4">
+        <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+            <div class="sm:flex sm:items-center sm:justify-between">
+                <a href="#" class="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse">
+                    <img src="/images/logoAFDC.png" class="h-14" alt="AufilDescontes Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dancing-script-base">Au Fil des Contes</span>
+                </a>
+                <ul class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0">
+                    <li>
+                        <a href="#info" class="hover:underline me-4 md:me-6">Infos</a>
+                    </li>
+                    <li>
+                        <a href="#maj" class="hover:underline me-4 md:me-6">Mise à jour</a>
+                    </li>
+                    <li>
+                        <a href="#Livre" class="hover:underline me-4 md:me-6">Livre D'or</a>
+                    </li>
+                    <li>
+                        <a href="#contact" class="hover:underline">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="my-6 border-gray-200 sm:mx-auto lg:my-8" />
+            <span class="block text-sm text-gray-500 sm:text-center">© 2024 <a href="https://pasteurmontroland.com/" class="hover:underline">R.A.L.F™</a>. All Rights Reserved.</span>
+        </div>
+    </footer>
+
+
     <!--#endregion -->
 
     <!--#region Défilement js  -->

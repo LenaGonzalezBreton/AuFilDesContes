@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Conte;
 use App\Http\Requests\StoreConteRequest;
 use App\Http\Requests\UpdateConteRequest;
+use App\Models\Caverne;
 use App\Models\MotCle;
 use App\Providers\ReponseApi;
 use Illuminate\Auth\Events\OtherDeviceLogout;
@@ -80,7 +81,9 @@ class ConteController extends Controller
     public function create()
     {
         try {
-            return view('conte/ajouter_modifier_conte');
+            $cavs = Caverne::all();
+            $allmotcles = MotCle::all();
+            return view('conte/ajouter_modifier_conte', compact('cavs', 'allmotcles'));
         } catch (Throwable $error) {
             dd($error);
         }
@@ -93,9 +96,32 @@ class ConteController extends Controller
     {
         //
         try {
-            dd($request);
-        } catch (\Throwable $error) {
-            //throw $th;
+            $completPath = $request->image->store(config('imagesconte.path'), 'public');
+            $completnameFile = explode("/", $completPath);
+
+            $completPathIntro = $request->intro->store(config('introconte.path'), 'public');
+            $introPath = explode("/", $completPathIntro);
+
+            $completPathHistoire = $request->histoire->store(config('histoireconte.path'), 'public');
+            $HistoirePath = explode("/", $completPathHistoire);
+
+            $idCav = $request->cav;
+
+            $conte = conte::create([
+                'titre_conte' => $request->titre_conte,
+                'intro_conte' => $introPath[3],
+                'image_conte' => $completnameFile[2],
+                'histoire_conte' => $HistoirePath[3],
+                'caverne_id' => $idCav,
+            ]);
+
+            $conte->save();
+            $con = conte::find($conte->id);
+            foreach ($request->motcle as $mot) {
+                $con->motcles()->attach($mot);
+            }
+            return redirect()->route('conte.index');
+        } catch (Throwable $error) {
             dd($error);
         }
     }
@@ -113,7 +139,10 @@ class ConteController extends Controller
      */
     public function edit(Conte $conte)
     {
-        return view('', compact('conte'));
+        $cavs = Caverne::all();
+        $allmotcles = MotCle::all();
+        $motclecontes = $conte->motcles();
+        return view('conte/ajouter_modifier_conte', compact('conte', 'cavs', 'allmotcles', 'motclecontes'));
     }
 
 
@@ -123,7 +152,21 @@ class ConteController extends Controller
      */
     public function update(UpdateConteRequest $request, Conte $conte)
     {
-        //
+        try {
+            $conte = conte::find($conte->id);
+            $oldTitre = $conte->titre_conte;
+            $oldCav = $conte->cav;
+            $oldMotCles = $conte->motcles();
+            dd($oldMotCles);
+            $oldImg = $conte->image_conte;
+            $oldIntro = $conte->intro_conte;
+            $oldHistoire = $conte->histoire_conte;
+
+
+            dd($oldMotCles);
+            return redirect()->route('caverne.index');
+        } catch (Throwable $error) {
+        }
     }
 
     /**
@@ -132,11 +175,14 @@ class ConteController extends Controller
     public function destroy(Conte $conte)
     {
         try {
-            Conte::destroy($conte);
-            return redirect()->route('');
+            $motcles = $conte->motcles;
+            foreach ($motcles as $motcle) {
+                $motcle->contes()->detach($conte);
+            }
+            Conte::destroy($conte->id);
         } catch (Throwable $e) {
             //retourner une alerte 
-            return redirect()->back();
+            dd($e);
         }
     }
 

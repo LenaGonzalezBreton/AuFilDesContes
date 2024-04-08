@@ -20,7 +20,7 @@
     </div>
 
     @foreach ($cavernes as $caverne)
-        <div class="relative rounded-lg border-double border-4 border-red-600 flex justify-center overflow-hidden items-center min-h-[550px]">
+        <div class="relative rounded-lg border-double border-4 border-red-600 flex justify-center overflow-hidden items-center min-h-[550px]" id="caverne_{{$caverne->id}}">
             <img class="max-w-full" src="storage/images/cavernes/{{$caverne->image_caverne}}" alt="">
             <div class="absolute bottom-0 w-full flex text-center place-items-center flex-col bg-slate-200/60">
                 <h1 class="text-2xl font-bold">{{$caverne->titre_caverne}}</h1>

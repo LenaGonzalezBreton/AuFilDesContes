@@ -9,6 +9,18 @@ class Conte extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'titre_conte',
+        'intro_conte',
+        'image_conte',
+        'histoire_conte',
+        'nombre_lecture_note',
+        'note_conte',
+        'nombre_note_conte',
+        'caverne_id',
+
+    ];
+
     public function motcles()
     {
         return $this->belongsToMany(MotCle::class);

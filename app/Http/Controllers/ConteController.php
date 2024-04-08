@@ -11,6 +11,7 @@ use App\Models\Caverne;
 use App\Models\MotCle;
 use App\Providers\ReponseApi;
 use Illuminate\Auth\Events\OtherDeviceLogout;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Prompts\Note;
 use PhpParser\Node\Scalar\String_;
 use PHPUnit\Event\Code\Throwable;
@@ -154,17 +155,92 @@ class ConteController extends Controller
     {
         try {
             $conte = conte::find($conte->id);
+
+            // OLD DATA
             $oldTitre = $conte->titre_conte;
-            $oldCav = $conte->cav;
-            $oldMotCles = $conte->motcles();
-            dd($oldMotCles);
+            $oldCav = $conte->caverne_id;
+            $oldMotCles = $conte->motcles;
             $oldImg = $conte->image_conte;
             $oldIntro = $conte->intro_conte;
             $oldHistoire = $conte->histoire_conte;
 
+            // Si le titre_caverne de la requet est différent de l'ancien titre alors tu change le titre, sinon tu remet l'ancien
+            if ($request->titre_conte != $oldTitre) {
+                $conte->titre_conte = $request->titre_conte;
+            } else {
+                $conte->titre_conte = $oldTitre;
+            }
+            // Si la caverne change alors l'id est passé en variable et donc on compare si de la caverne n'est pas égale a l'id de caverne enregister en base alors tu change
+            if ($request->cav != $oldCav) {
+                $conte->caverne_id = $request->cav;
+            } else {
+                $conte->caverne_id = $oldCav;
+            }
 
-            dd($oldMotCles);
-            return redirect()->route('caverne.index');
+            // si dans la request y'a une image
+            if ($request->image) {
+                // enregistrement de l'image dans le storage 
+                $completPath = $request->image->store(config('imagesconte.path'), 'public');
+                // récupération du nom
+                $completnameFile = explode("/", $completPath);
+                // enregistrement du nom en base
+                $conte->image_conte = $completnameFile[2];
+                // création du path pour la suppression de l'ancienne image
+                $img = "/public/images/contes/" . $oldImg;
+                // suppression de l'ancienne image
+                Storage::delete($img);
+            } else {
+                // sinon on garde l'ancienne image
+                $conte->image_conte = $oldImg;
+            }
+
+            // Si dans la request y'a une intro
+            if ($request->intro) {
+                // enregistrement de l'intro dans le storage 
+                $completPathIntro = $request->intro->store(config('introconte.path'), 'public');
+                // récupération du nom
+                $introPath = explode("/", $completPathIntro);
+                // enregistrement du nom en base
+                $conte->intro_conte = $introPath[3];
+                // création du path pour la suppression de l'ancienne intro
+                $intro = '/public/sounds/contes/intros/' . $oldIntro;
+                // suppression de l'ancienne image
+                Storage::delete($intro);
+            } else {
+                // sinon on garde l'ancienne image
+                $conte->intro_conte = $oldIntro;
+            }
+
+            // Si dans la request y'a une intro
+            if ($request->histoire) {
+                // enregistrement de l'histoire dans le storage 
+                $completPathHistoire = $request->histoire->store(config('histoireconte.path'), 'public');
+                // récupération du nom
+                $HistoirePath = explode("/", $completPathHistoire);
+                // enregistrement du nom en base
+                $conte->histoire_conte = $HistoirePath[3];
+                // création du path pour la suppression de l'ancienne histoire
+                $histoire = '/public/sounds/contes/histoires/' . $oldHistoire;
+                // suppression de l'ancienne histoire
+                Storage::delete($histoire);
+            } else {
+                // sinon on garde l'ancienne histoire
+                $conte->histoire_conte = $oldHistoire;
+            }
+
+            foreach ($oldMotCles as $motcle) {
+                foreach ($request->motcle as $mot) {
+                    if ($motcle == $mot) {
+                        // Je bloque je laisse pour demain
+                    }
+                }
+            }
+
+
+            $conte->save();
+
+
+            return redirect()->route('conte.index');
         } catch (Throwable $error) {
         }
     }
@@ -175,10 +251,17 @@ class ConteController extends Controller
     public function destroy(Conte $conte)
     {
         try {
+            $img = "/public/images/contes/" . $conte->image_conte;
+            $intro = "/public/sounds/contes/intros/" . $conte->intro_conte;
+            $histoire = "/public/sounds/contes/histoires/" . $conte->histoire_conte;
             $motcles = $conte->motcles;
             foreach ($motcles as $motcle) {
                 $motcle->contes()->detach($conte);
             }
+            Storage::delete($img);
+            Storage::delete($intro);
+            Storage::delete($histoire);
+
             Conte::destroy($conte->id);
         } catch (Throwable $e) {
             //retourner une alerte 

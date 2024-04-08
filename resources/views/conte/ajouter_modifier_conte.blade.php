@@ -37,7 +37,7 @@
                   <label for="text" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white mt-5">Nom de la caverne</label>
                     <div class="flex flex-row items-end text-3xl text-white gap-10">
                       <select name="cav" id="underline_select" class=" block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-                        <option selected>@if(isset($conte)){{$conte->caverne->titre_caverne}}@else Choisir une caverne @endif</option>
+                        <option @if(isset($conte))value ="{{$conte->caverne_id}}"@else value="" @endif selected>@if(isset($conte)){{$conte->caverne->titre_caverne}}@else Choisir une caverne @endif</option>
                           @foreach ($cavs as $cav)
                             <option value="{{$cav->id}}">{{$cav->titre_caverne}}</option>
                           @endforeach

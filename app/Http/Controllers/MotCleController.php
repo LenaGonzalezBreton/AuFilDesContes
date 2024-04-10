@@ -75,13 +75,12 @@ class MotCleController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($motCle)
+    public function destroy(string $motCle)
     {
+//        dd($motCle);
         try {
-
             MotCle::destroy($motCle);
             return redirect()->back();
-
         } catch (Throwable $error) {
             return redirect()->back();
         }

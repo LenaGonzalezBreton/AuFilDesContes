@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LivreOr;
 use App\Http\Requests\StoreLivreOrRequest;
 use App\Http\Requests\UpdateLivreOrRequest;
+use Throwable;
 
 class LivreOrController extends Controller
 {
@@ -51,16 +52,30 @@ class LivreOrController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLivreOrRequest $request, LivreOr $livreOr)
+    public function update(UpdateLivreOrRequest $request, $livreOr)
     {
         //
+        try {
+            $com = LivreOr::find($livreOr);
+            $com->is_verified_livreor = true;
+            $com->save();
+            return redirect()->route('dashboard');
+        } catch (Throwable $error) {
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LivreOr $livreOr)
+    public function destroy($livreOr)
     {
         //
+        try {
+            $com = LivreOr::find($livreOr);
+            LivreOr::destroy($com->id);
+            return redirect()->route('dashboard');
+        } catch (Throwable $error) {
+            dd($error);
+        }
     }
 }

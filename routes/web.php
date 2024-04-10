@@ -36,9 +36,7 @@ Route::resources([
 
 // Route::get('/caverne/{idCaverne}/conte', [App\Http\Controllers\ConteController::class, 'index'])->name("conte.index");
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', [\App\Http\Controllers\Controller::class, "dashboard"])->name('dashboard');
 
 Route::get('/mots-clefs', function () {
     return view('mot_clef/voir_mots_clefs');

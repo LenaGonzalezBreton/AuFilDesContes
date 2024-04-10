@@ -49,7 +49,6 @@
                 </div>
                 <div class="absolute bottom-0 w-full flex text-center place-items-center flex-col bg-slate-200/60">
                     <h1 class="text-2xl font-bold">{{$conte->titre_conte}}</h1>
-                    <h2 class="font-medium">Intro : </h2>
                     <audio controlsList="nodownload" id="intro_{{$conte->id}}" class="w-9/12 hidden" src="storage/sounds/contes/intros/{{$conte->intro_conte}}" controls></audio>
                     <h2 class="font-medium">Histoire :</h2>
                     <audio controlsList="nodownload" class="w-9/12" src="storage/sounds/contes/histoires/{{$conte->histoire_conte}}" controls></audio>

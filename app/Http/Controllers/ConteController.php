@@ -163,6 +163,7 @@ class ConteController extends Controller
             $oldImg = $conte->image_conte;
             $oldIntro = $conte->intro_conte;
             $oldHistoire = $conte->histoire_conte;
+            $requestMotCle = $request->motcle;
 
             // Si le titre_caverne de la requet est différent de l'ancien titre alors tu change le titre, sinon tu remet l'ancien
             if ($request->titre_conte != $oldTitre) {
@@ -228,18 +229,15 @@ class ConteController extends Controller
                 $conte->histoire_conte = $oldHistoire;
             }
 
-            foreach ($oldMotCles as $motcle) {
-                foreach ($request->motcle as $mot) {
-                    if ($motcle == $mot) {
-                        // Je bloque je laisse pour demain
-                    }
-                }
+            // je detache tous les mots associé au conte
+            foreach ($oldMotCles as $oldMotCle) {
+                $conte->motcles()->detach($oldMotCle);
             }
-
-
+            // j'attache les nouveaux mots
+            foreach ($requestMotCle as $newMotCle) {
+                $conte->motcles()->attach($newMotCle);
+            }
             $conte->save();
-
-
             return redirect()->route('conte.index');
         } catch (Throwable $error) {
         }

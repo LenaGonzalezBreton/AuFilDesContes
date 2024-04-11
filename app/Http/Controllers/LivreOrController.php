@@ -15,7 +15,9 @@ class LivreOrController extends Controller
     public function index()
     {
         // Récupérer tous les messages vérifiés
-        $messages = Message::where('is_verified_livreor', true)->get();
+        $messages = Message::where('is_verified_livreor', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         // Passer les messages à la vue
         return view('welcome', ['messages' => $messages]);
@@ -39,8 +41,8 @@ class LivreOrController extends Controller
         $post->commentaire_livreor = $request->input('message');
         $post->is_verified_livreor = false;
         $post->save();
-
-        return redirect('/')->with('status', 'Facture ajoutée.');
+        // Redirection vers la page d'accueil avec un message flash
+        return redirect('/')->with('status', 'Message envoyé et en attente de validation par Au fil des contes');
     }
 
     /**

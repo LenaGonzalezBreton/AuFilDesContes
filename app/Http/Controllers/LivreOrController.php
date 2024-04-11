@@ -6,6 +6,8 @@ use App\Models\LivreOr;
 use App\Http\Requests\StoreLivreOrRequest;
 use App\Http\Requests\UpdateLivreOrRequest;
 use Throwable;
+use Illuminate\Http\Request;
+
 
 class LivreOrController extends Controller
 {
@@ -14,7 +16,13 @@ class LivreOrController extends Controller
      */
     public function index()
     {
-        //
+        // Récupérer tous les messages vérifiés
+        $messages = livreor::where('is_verified_livreor', true)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        // Passer les messages à la vue
+        return view('welcome', ['messages' => $messages]);
     }
 
     /**
@@ -28,9 +36,15 @@ class LivreOrController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreLivreOrRequest $request)
+    public function store(Request $request)
     {
-        //
+        $post = new LivreOr();
+        $post->prenom = $request->input('prenom');
+        $post->commentaire_livreor = $request->input('message');
+        $post->is_verified_livreor = false;
+        $post->save();
+        // Redirection vers la page d'accueil avec un message flash
+        return redirect('/')->with('status', 'Message envoyé et en attente de validation par Au fil des contes');
     }
 
     /**

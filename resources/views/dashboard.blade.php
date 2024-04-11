@@ -1,3 +1,4 @@
+
 @extends('template')
 
 @section('title')
@@ -146,3 +147,4 @@
 </div>
 
 @endsection
+

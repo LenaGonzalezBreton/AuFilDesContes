@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('livre_ors', function (Blueprint $table) {
             $table->id();
+            $table->string("prenom");
             $table->string("commentaire_livreor");
             $table->boolean("is_verified_livreor");
             $table->timestamps();

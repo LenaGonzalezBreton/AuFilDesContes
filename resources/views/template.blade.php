@@ -17,6 +17,7 @@
     </head>
 
     <body class="bg-gray-700">
+    @auth
         <div>
                 <nav class="sticky top-0 bg-red-800  drop-shadow shadow-blue-600 z-50">
                     <div class=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 ">
@@ -44,6 +45,15 @@
                                 <li>
                                     <a href="{{route('caverne.index')}}" class="@yield('cavernes', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')">Cavernes</a>
                                 </li>
+                                @auth
+                                <li>
+                                    <form action="{{route('logout')}}" method="POST">
+                                        @csrf
+                                        @method('POST')
+                                        <button class="@yield('logout', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')">Se déconnecter {{Auth::user()->name}}<i class="uil uil-signout mr-5"></i></button>
+                                    </form>
+                                </li>
+                                @endauth
                             </ul>
                         </div>
                     </div>
@@ -67,6 +77,11 @@
                 @yield('body', 'Rien à afficher pour le moment.')
             </div>
         </div>
+        @endauth
+        @guest
+            <h2>Vous n'avez pas l'autorisations d'être ici</h2>
+            <a href="{{route('home')}}">Retourner sur le site</a>
+        @endguest
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="{{asset('assets/js/script.js')}}"></script>

@@ -5,22 +5,17 @@ use App\Http\Controllers\AppVersionController;
 use App\Http\Controllers\CaverneController;
 use App\Http\Controllers\ConteController;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\LivreOrController;
 use App\Http\Controllers\MotCleController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\TokenController;
 use App\Http\Middleware\VerifyDeployToken;
 use App\Http\Middleware\VerifyToken;
 use App\Models\AppVersion;
-use App\Models\LivreOr;
 use Illuminate\Http\Request;
-
 use App\Http\Controllers\LivreOrController;
 use App\Http\Controllers\ProfileController;
 use App\Models\LivreOr;
-
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,15 +27,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resources([
-    'caverne' => CaverneController::class,
-    'conte' => ConteController::class,
-    'livreor' => LivreOrController::class,
-    'motcle' => MotCleController::class,
-    'page' => PageController::class,
-]);
+Route::get('/dashboard', [\App\Http\Controllers\Controller::class, "dashboard"])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', [\App\Http\Controllers\Controller::class, "dashboard"])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::resources([
+        'caverne' => CaverneController::class,
+        'conte' => ConteController::class,
+        'livreor' => LivreOrController::class,
+        'motcle' => MotCleController::class,
+        'page' => PageController::class,
+    ]);
+});
 
 Route::get('/mots-clefs', function () {
     return view('mot_clef/voir_mots_clefs');
@@ -60,23 +57,21 @@ Route::post('/store-id', function (Request $request) {
     // Stocke le nouvel ID dans la session
     session()->put('id', $id);
     return response()->json(['success' => true]);
+});
 
 Route::get('/', function () {
-    $livres = LivreOr::where('is_verified_livreor',1)
+    $livres = LivreOr::where('is_verified_livreor', 1)
         ->orderBy('created_at', 'desc')
         ->get();
-    return view('welcome',compact('livres'))->with('status', 'Message envoyé et en attente de validation par Au fil des contes');
+    return view('welcome', compact('livres'))->with('status', 'Message envoyé et en attente de validation par Au fil des contes');
 })->name('home');
 
 Route::post('/addLivreOr', [LivreOrController::class, 'store'])->name('addLivreOr');
 
-Route::get('/contact', function (){
+Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -84,4 +79,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

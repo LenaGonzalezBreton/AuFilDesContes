@@ -44,8 +44,13 @@ Route::get('/ajouter-mot-clef', function () {
     return view('mot_clef/ajouter_modifier_mot_clef');
 })->name('ajouter-mot-clef');
 
-Route::get('/contes', function () {
-    return view('conte/voir_contes');
-})->name('contes');
-
 Route::post('/caverne/conte', [\App\Http\Controllers\ConteController::class, "rechercheConteCaverne"])->name("rechercheConteCaverne");
+
+Route::get('/caverne/{idCaverne}/conte', [\App\Http\Controllers\ConteController::class, "indexConteCaverne"])->name("indexConteCaverne");
+Route::post('/store-id', function (Request $request) {
+    $id = $request->input('id');
+    session()->forget('id'); // Supprime la clé 'id' de la session
+    // Stocke le nouvel ID dans la session
+    session()->put('id', $id);
+    return response()->json(['success' => true]);
+});

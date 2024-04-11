@@ -14,10 +14,13 @@
             <div class="justify-center items-center flex">
                 <form method="post" action="{{route('rechercheConteCaverne')}}">
                     @csrf
-                    {{-- <input name="idCaverne" type="hidden" value="{{$idCaverne}}"> --}}
+                    @if(!empty($idCaverne))
+                    <input name="idCaverne" type="hidden" value="{{$idCaverne}}"> 
+                    @endif
                     <input name="search" class="w-fit h-fit center border-2" placeholder="Recherche ...">
                     <button class=" bg-white text-gray border-2 border-r-2 border-b-2 hover:border-r-4 hover:border-b-4 hover:border-l hover-t">Rechercher</button>
                 </form>
+                <label> parmi les {{$nbContes}} contes.</label>
             </div>
         </span>
     </div>
@@ -68,6 +71,7 @@
                             {{$conte->nombre_note_conte}}
                         </div>
                     </div>
+
                 </div>
                 <div class="absolute flex flex-row w-full justify-end text-4xl top-3 right-5">
                     <a class="bg-slate-200/90 rounded-l-lg text-green-600 hover:text-white hover:bg-green-600" href="{{route('conte.edit' ,$conte->id)}}"><i class="uil uil-edit"></i></a>

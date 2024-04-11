@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Conte;
@@ -16,7 +15,6 @@ use Laravel\Prompts\Note;
 use PhpParser\Node\Scalar\String_;
 use Throwable;
 use Ramsey\Uuid\Type\Integer;
-
 use function PHPSTORM_META\map;
 
 class ConteController extends Controller
@@ -28,34 +26,59 @@ class ConteController extends Controller
     {
         try {
             $contes = conte::all();
-            return view('conte/voir_contes', compact("contes"));
+            $nbContes = count($contes);
+            return view('conte/voir_contes', compact("contes", "nbContes"));
         } catch (Throwable $error) {
             return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
         }
     }
+
+    public function indexConteCaverne(int $idCaverne){
+        $motCle = [];
+        try {
+            $contes = Conte::all()->where('caverne_id', $idCaverne);
+            //foreach contes pour chaque contes, recuperer ses mots clés et ajouter dans un tableau
+            foreach ($contes as $conte) {
+                // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
+                $motcleconte = [];
+                $motcleconte = $conte->motcles;
+                array_push($motCle, $motcleconte);
+            }
+            //$contes = Conte::with('motcles')->get();
+            //dd($contes, $request['idCaverne']);
+            $nbContes = count($contes);
+            return view('conte/voir_contes', compact("contes", "motCle", "idCaverne", "nbContes"));
+        } catch (Throwable $e) {
+            return redirect()->back();
+        }
+    }
+
     /**
      * Recherche les contes à partir du titre ou des mots clés
      */
     public function rechercheConteCaverne(Request $request)
     {
-        $motCle = [];
-        // try {
-        $contes = Conte::where('caverne_id', $request['idCaverne'])->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
-        // $contes = Conte::all()->where('caverne_id', $request['idCaverne']);
-        // $newconte = $contes->where('titre_caverne', $request['search']);
-        // dd($contes);
-        foreach ($contes as $conte) {
-            // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
-            $motcleconte = [];
-            $motcleconte = $conte->motcles;
-            array_push($motCle, $motcleconte);
+        try {
+            if(!empty($request['idCaverne'])){
+                $contes = DB::table('contes')->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
+            
+            
+            } else {
+                $contes = DB::table('contes')->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
+            }
+        
+        //$motCle = [];
+        
+            // foreach ($contes as $conte) {
+            //     $motCle = MotCle::where("id", $conte->motcles->mot_cle_id);
+            //     $motcleconte = $conte->motcles;
+            //     array_push($motCle, $motcleconte);
+            // }
+            $nbContes = count($contes);
+            return view('conte/voir_contes', ['idCaverne' => $request['idCaverne']])->with(["contes" => $contes, "motCle" => $motCle, "nbContes" => $nbContes]);
+        } catch(Throwable $e) {
+            return redirect()->back();
         }
-        // dd($contes, $motCle);
-        // return view('conte/voir_contes', compact("contes", "motCle"));
-        return view('conte/voir_contes', ['idCaverne' => $request['idCaverne']])->with(["contes" => $contes, "motCle" => $motCle]);
-        // } catch(Throwable $e) {
-        // return redirect()->back();
-        // }
     }
 
 

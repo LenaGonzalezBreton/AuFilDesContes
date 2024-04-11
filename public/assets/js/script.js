@@ -1,4 +1,3 @@
-$('#popup-modal').hide();
 var RecupId;
 
 function GetId(id) {

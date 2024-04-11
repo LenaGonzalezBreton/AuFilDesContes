@@ -50,8 +50,8 @@
                 </nav>
 
                 @if(session('success'))
-                    <div class="flex w-full border-4 bg-green-400 border-green-500 p-5 flex-col items-center justify-center success">
-                    <p class="success">{{Session::get('success')}}</p>
+                    <div class="flex w-full border-4 bg-green-400 border-green-500 p-5 flex-col items-center justify-center animation">
+                    <p>{{Session::get('success')}}</p>
                     </div>
                 
                 @else @if(session('error'))

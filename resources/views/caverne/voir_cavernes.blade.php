@@ -34,7 +34,7 @@
             </div>
             <div class="absolute flex flex-row w-full justify-end text-4xl top-3 right-5">
                 <a class="bg-slate-200/90 rounded-l-lg text-green-600 hover:text-white hover:bg-green-600" href="{{route('caverne.edit' ,$caverne->id)}}"><i class="uil uil-edit"></i></a>
-                <button onclick="GetIdCaverne({{$caverne->id}})" type="button" class="bg-slate-200/90 rounded-r-lg text-red-600 hover:text-white hover:bg-red-600" data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
+                <button onclick="GetId({{$caverne->id}})" type="button" class="bg-slate-200/90 rounded-r-lg text-red-600 hover:text-white hover:bg-red-600" data-modal-target="popup-modal" data-modal-toggle="popup-modal" >
                     <i class="font-black uil uil-times-circle"></i>
                 </button>
             </div>

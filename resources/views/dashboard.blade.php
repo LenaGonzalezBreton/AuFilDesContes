@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('title')
-    action caverne
+    Dashboard
 @endsection
 
 @section('dashboard')

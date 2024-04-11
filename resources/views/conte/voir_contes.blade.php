@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('title')
-    action conte
+    Les contes
 @endsection
 
 @section('contes')

@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('title')
-    action caverne
+    Les mots clefs
 @endsection
 
 @section('mots-clefs')

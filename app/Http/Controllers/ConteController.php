@@ -7,12 +7,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Conte;
 use App\Http\Requests\StoreConteRequest;
 use App\Http\Requests\UpdateConteRequest;
+use App\Models\Caverne;
 use App\Models\MotCle;
 use App\Providers\ReponseApi;
 use Illuminate\Auth\Events\OtherDeviceLogout;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Prompts\Note;
 use PhpParser\Node\Scalar\String_;
-use PHPUnit\Event\Code\Throwable;
+use Throwable;
 use Ramsey\Uuid\Type\Integer;
 
 use function PHPSTORM_META\map;
@@ -28,25 +30,8 @@ class ConteController extends Controller
             $contes = conte::all();
             return view('conte/voir_contes', compact("contes"));
         } catch (Throwable $error) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
         }
-
-        // $motCle = [];
-        // try {
-        //     $contes = Conte::all()->where('caverne_id', $idCaverne);
-        //     //foreach contes pour chaque contes, recuperer ses mots clés et ajouter dans un tableau
-        //     foreach ($contes as $conte) {
-        //         // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
-        //         $motcleconte = [];
-        //         $motcleconte = $conte->motcles;
-        //         array_push($motCle, $motcleconte);
-        //     }
-        //     //$contes = Conte::with('motcles')->get();
-        //     //dd($contes, $request['idCaverne']);
-        //     return view('conte/voir_contes', compact("contes", "motCle", "idCaverne"));
-        // } catch (Throwable $e) {
-        //     return redirect()->back();
-        // }
     }
     /**
      * Recherche les contes à partir du titre ou des mots clés
@@ -79,7 +64,13 @@ class ConteController extends Controller
      */
     public function create()
     {
-        //
+        try {
+            $cavs = Caverne::all();
+            $allmotcles = MotCle::all();
+            return view('conte/ajouter_modifier_conte', compact('cavs', 'allmotcles'));
+        } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
+        }
     }
 
     /**
@@ -88,6 +79,35 @@ class ConteController extends Controller
     public function store(StoreConteRequest $request)
     {
         //
+        try {
+            $completPath = $request->image->store(config('imagesconte.path'), 'public');
+            $completnameFile = explode("/", $completPath);
+
+            $completPathIntro = $request->intro->store(config('introconte.path'), 'public');
+            $introPath = explode("/", $completPathIntro);
+
+            $completPathHistoire = $request->histoire->store(config('histoireconte.path'), 'public');
+            $HistoirePath = explode("/", $completPathHistoire);
+
+            $idCav = $request->cav;
+
+            $conte = conte::create([
+                'titre_conte' => $request->titre_conte,
+                'intro_conte' => $introPath[3],
+                'image_conte' => $completnameFile[2],
+                'histoire_conte' => $HistoirePath[3],
+                'caverne_id' => $idCav,
+            ]);
+
+            $conte->save();
+            $con = conte::find($conte->id);
+            foreach ($request->motcle as $mot) {
+                $con->motcles()->attach($mot);
+            }
+            return redirect()->route('conte.index')->with('success', 'Conte a été crée !');
+        } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
+        }
     }
 
     /**
@@ -95,7 +115,7 @@ class ConteController extends Controller
      */
     public function show(Conte $conte)
     {
-        return view('view', compact('conte'));
+        // return view('view', compact('conte'));
     }
 
     /**
@@ -103,7 +123,14 @@ class ConteController extends Controller
      */
     public function edit(Conte $conte)
     {
-        return view('', compact('conte'));
+        try {
+            $cavs = Caverne::all();
+            $allmotcles = MotCle::all();
+            $motclecontes = $conte->motcles();
+            return view('conte/ajouter_modifier_conte', compact('conte', 'cavs', 'allmotcles', 'motclecontes'));
+        } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
+        }
     }
 
 
@@ -113,7 +140,95 @@ class ConteController extends Controller
      */
     public function update(UpdateConteRequest $request, Conte $conte)
     {
-        //
+        try {
+            $conte = conte::find($conte->id);
+
+            // OLD DATA
+            $oldTitre = $conte->titre_conte;
+            $oldCav = $conte->caverne_id;
+            $oldMotCles = $conte->motcles;
+            $oldImg = $conte->image_conte;
+            $oldIntro = $conte->intro_conte;
+            $oldHistoire = $conte->histoire_conte;
+            $requestMotCle = $request->motcle;
+
+            // Si le titre_caverne de la requet est différent de l'ancien titre alors tu change le titre, sinon tu remet l'ancien
+            if ($request->titre_conte != $oldTitre) {
+                $conte->titre_conte = $request->titre_conte;
+            } else {
+                $conte->titre_conte = $oldTitre;
+            }
+            // Si la caverne change alors l'id est passé en variable et donc on compare si de la caverne n'est pas égale a l'id de caverne enregister en base alors tu change
+            if ($request->cav != $oldCav) {
+                $conte->caverne_id = $request->cav;
+            } else {
+                $conte->caverne_id = $oldCav;
+            }
+
+            // si dans la request y'a une image
+            if ($request->image) {
+                // enregistrement de l'image dans le storage 
+                $completPath = $request->image->store(config('imagesconte.path'), 'public');
+                // récupération du nom
+                $completnameFile = explode("/", $completPath);
+                // enregistrement du nom en base
+                $conte->image_conte = $completnameFile[2];
+                // création du path pour la suppression de l'ancienne image
+                $img = "/public/images/contes/" . $oldImg;
+                // suppression de l'ancienne image
+                Storage::delete($img);
+            } else {
+                // sinon on garde l'ancienne image
+                $conte->image_conte = $oldImg;
+            }
+
+            // Si dans la request y'a une intro
+            if ($request->intro) {
+                // enregistrement de l'intro dans le storage 
+                $completPathIntro = $request->intro->store(config('introconte.path'), 'public');
+                // récupération du nom
+                $introPath = explode("/", $completPathIntro);
+                // enregistrement du nom en base
+                $conte->intro_conte = $introPath[3];
+                // création du path pour la suppression de l'ancienne intro
+                $intro = '/public/sounds/contes/intros/' . $oldIntro;
+                // suppression de l'ancienne image
+                Storage::delete($intro);
+            } else {
+                // sinon on garde l'ancienne image
+                $conte->intro_conte = $oldIntro;
+            }
+
+            // Si dans la request y'a une intro
+            if ($request->histoire) {
+                // enregistrement de l'histoire dans le storage 
+                $completPathHistoire = $request->histoire->store(config('histoireconte.path'), 'public');
+                // récupération du nom
+                $HistoirePath = explode("/", $completPathHistoire);
+                // enregistrement du nom en base
+                $conte->histoire_conte = $HistoirePath[3];
+                // création du path pour la suppression de l'ancienne histoire
+                $histoire = '/public/sounds/contes/histoires/' . $oldHistoire;
+                // suppression de l'ancienne histoire
+                Storage::delete($histoire);
+            } else {
+                // sinon on garde l'ancienne histoire
+                $conte->histoire_conte = $oldHistoire;
+            }
+
+            // je detache tous les mots associé au conte
+            foreach ($oldMotCles as $oldMotCle) {
+                $conte->motcles()->detach($oldMotCle);
+            }
+            // j'attache les nouveaux mots
+            foreach ($requestMotCle as $newMotCle) {
+                $conte->motcles()->attach($newMotCle);
+            }
+            $conte->save();
+            return redirect()->route('conte.index')->with('success', 'Modifications enregistrées');
+        } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
+        }
     }
 
     /**
@@ -122,11 +237,21 @@ class ConteController extends Controller
     public function destroy(Conte $conte)
     {
         try {
-            Conte::destroy($conte);
-            return redirect()->route('');
+            $img = "/public/images/contes/" . $conte->image_conte;
+            $intro = "/public/sounds/contes/intros/" . $conte->intro_conte;
+            $histoire = "/public/sounds/contes/histoires/" . $conte->histoire_conte;
+            $motcles = $conte->motcles;
+            foreach ($motcles as $motcle) {
+                $motcle->contes()->detach($conte);
+            }
+            Storage::delete($img);
+            Storage::delete($intro);
+            Storage::delete($histoire);
+
+            Conte::destroy($conte->id);
         } catch (Throwable $e) {
             //retourner une alerte 
-            return redirect()->back();
+            dd($e);
         }
     }
 

@@ -42,17 +42,6 @@ return [
             'visibility' => 'public',
         ],
 
-        'images' => [
-            'driver' => 'local',
-            'root' => public_path('/storage'),
-            'visibility' => 'public',
-        ],
-
-        'intros' => [
-            'driver' => 'local',
-            'root' => public_path('/storage'),
-            'visibility' => 'public',
-        ],
 
         's3' => [
             'driver' => 's3',
@@ -82,7 +71,16 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('storage/images') => storage_path('app/public/images'),
-        public_path('storage/intros') => storage_path('app/public/intros')
+        public_path('storage/images/cavernes') => storage_path('app/public/images/cavernes'),
+        public_path('storage/images/contes') => storage_path('app/public/images/contes'),
+        public_path('storage/sounds') => storage_path('app/public/sounds'),
+        public_path('storage/sounds/cavernes') => storage_path('app/public/sounds/cavernes'),
+        public_path('storage/sounds/contes') => storage_path('app/public/sounds/contes'),
+        public_path('storage/sounds/contes/intros') => storage_path('app/public/sounds/contes/intros'),
+        public_path('storage/sounds/contes/histoires') => storage_path('app/public/contes/histoires')
+
+
+
 
     ],
 ];

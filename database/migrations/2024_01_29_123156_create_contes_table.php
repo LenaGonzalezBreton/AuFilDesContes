@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string("intro_conte");
             $table->string("image_conte");
             $table->string("histoire_conte");
-            $table->integer("nombre_lecture_conte");
-            $table->integer("note_conte");
-            $table->integer("nombre_note_conte");
+            $table->integer("nombre_lecture_conte")->default(0);
+            $table->integer("note_conte")->default(0);
+            $table->integer("nombre_note_conte")->default(0);
             $table->foreignId('caverne_id')->constrained();
             $table->timestamps();
         });

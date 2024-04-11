@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppVersionController;
 use App\Http\Controllers\CaverneController;
 use App\Http\Controllers\ConteController;
+use App\Http\Controllers\Controller;
 use App\Http\Controllers\LivreOrController;
 use App\Http\Controllers\MotCleController;
 use App\Http\Controllers\PageController;
@@ -33,9 +34,7 @@ Route::resources([
     'page' => PageController::class,
 ]);
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::get('/', [\App\Http\Controllers\Controller::class, "dashboard"])->name('dashboard');
 
 Route::get('/mots-clefs', function () {
     return view('mot_clef/voir_mots_clefs');
@@ -50,11 +49,3 @@ Route::get('/contes', function () {
 })->name('contes');
 
 Route::post('/caverne/conte', [\App\Http\Controllers\ConteController::class, "rechercheConteCaverne"])->name("rechercheConteCaverne");
-
-Route::post('/store-id', function (Request $request) {
-    $id = $request->input('id');
-    session()->forget('id'); // Supprime la clé 'id' de la session
-    // Stocke le nouvel ID dans la session
-    session()->put('id', $id);
-    return response()->json(['success' => true]);
-});

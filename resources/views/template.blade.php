@@ -8,10 +8,9 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css">
-        <link rel="stylesheet" href="css/style.css">
         <link rel="shortcut icon" href="./assets/images/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="{{asset("assets/css/style.css")}}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-
         <title>
             @yield('title', 'null')
         </title>
@@ -34,7 +33,7 @@
                         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                             <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-red-100 rounded-lg bg-red-800 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
                                 <li>
-                                    <a href="{{route('dashboard')}}" class="@yield('dashboard', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')" >Menu</a>
+                                    <a href="{{route('dashboard')}}" class="@yield('dashboard', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')" >Dashboard</a>
                                 </li>
                                 <li>
                                     <a href="{{route('motcle.index')}}" class="@yield('mots-clefs', ' block py-2 px-3 text-red-600 hover:text-white rounded hover:bg-white md:hover:bg-transparent md:p-0 ')">Mots Clefs</a>
@@ -49,13 +48,27 @@
                         </div>
                     </div>
                 </nav>
+
+                @if(session('success'))
+                    <div class="flex w-full border-4 bg-green-400 border-green-500 p-5 flex-col items-center justify-center success">
+                    <p class="success">{{Session::get('success')}}</p>
+                    </div>
+                
+                @else @if(session('error'))
+                    <div class="flex w-full border-4 bg-red-400 border-red-500 p-5 flex-col items-center justify-center animation">
+                        <p class="text-xl">{{Session::get('error')}}</p>
+                        </div>
+                
+                @endif
+                @endif
+
+
             <div class="h-full">
                 @yield('body', 'Rien à afficher pour le moment.')
             </div>
         </div>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script src="{{asset('assets/js/script.js')}}"></script>
 
     </body>

@@ -1,3 +1,33 @@
 .audioplayer audio::-webkit-media-controls-panel {
     background-color: #56aeff;
 }
+
+.animation {
+    animation: efface 5s ease-in-out 1 forwards;
+    -webkit-animation: efface 5s ease-in-out 1 forwards;
+}
+
+@keyframes efface {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateX(0%);
+        -webkit-transform: translateX(0%);
+        -moz-transform: translateX(0%);
+        -ms-transform: translateX(0%);
+        -o-transform: translateX(0%);
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+        transform: translateX(+100%);
+        -webkit-transform: translateX(+100%);
+        -moz-transform: translateX(+100%);
+        -ms-transform: translateX(+100%);
+        -o-transform: translateX(+100%);
+    }
+}

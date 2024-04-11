@@ -14,7 +14,7 @@ use Illuminate\Auth\Events\OtherDeviceLogout;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Prompts\Note;
 use PhpParser\Node\Scalar\String_;
-use PHPUnit\Event\Code\Throwable;
+use Throwable;
 use Ramsey\Uuid\Type\Integer;
 
 use function PHPSTORM_META\map;
@@ -30,25 +30,8 @@ class ConteController extends Controller
             $contes = conte::all();
             return view('conte/voir_contes', compact("contes"));
         } catch (Throwable $error) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
         }
-
-        // $motCle = [];
-        // try {
-        //     $contes = Conte::all()->where('caverne_id', $idCaverne);
-        //     //foreach contes pour chaque contes, recuperer ses mots clés et ajouter dans un tableau
-        //     foreach ($contes as $conte) {
-        //         // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
-        //         $motcleconte = [];
-        //         $motcleconte = $conte->motcles;
-        //         array_push($motCle, $motcleconte);
-        //     }
-        //     //$contes = Conte::with('motcles')->get();
-        //     //dd($contes, $request['idCaverne']);
-        //     return view('conte/voir_contes', compact("contes", "motCle", "idCaverne"));
-        // } catch (Throwable $e) {
-        //     return redirect()->back();
-        // }
     }
     /**
      * Recherche les contes à partir du titre ou des mots clés
@@ -86,7 +69,7 @@ class ConteController extends Controller
             $allmotcles = MotCle::all();
             return view('conte/ajouter_modifier_conte', compact('cavs', 'allmotcles'));
         } catch (Throwable $error) {
-            dd($error);
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
         }
     }
 
@@ -121,9 +104,9 @@ class ConteController extends Controller
             foreach ($request->motcle as $mot) {
                 $con->motcles()->attach($mot);
             }
-            return redirect()->route('conte.index');
+            return redirect()->route('conte.index')->with('success', 'Conte a été crée !');
         } catch (Throwable $error) {
-            dd($error);
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
         }
     }
 
@@ -132,7 +115,7 @@ class ConteController extends Controller
      */
     public function show(Conte $conte)
     {
-        return view('view', compact('conte'));
+        // return view('view', compact('conte'));
     }
 
     /**
@@ -140,10 +123,14 @@ class ConteController extends Controller
      */
     public function edit(Conte $conte)
     {
-        $cavs = Caverne::all();
-        $allmotcles = MotCle::all();
-        $motclecontes = $conte->motcles();
-        return view('conte/ajouter_modifier_conte', compact('conte', 'cavs', 'allmotcles', 'motclecontes'));
+        try {
+            $cavs = Caverne::all();
+            $allmotcles = MotCle::all();
+            $motclecontes = $conte->motcles();
+            return view('conte/ajouter_modifier_conte', compact('conte', 'cavs', 'allmotcles', 'motclecontes'));
+        } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
+        }
     }
 
 
@@ -238,8 +225,9 @@ class ConteController extends Controller
                 $conte->motcles()->attach($newMotCle);
             }
             $conte->save();
-            return redirect()->route('conte.index');
+            return redirect()->route('conte.index')->with('success', 'Modifications enregistrées');
         } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error);
         }
     }
 

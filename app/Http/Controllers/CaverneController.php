@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCaverneRequest;
 use App\Http\Requests\UpdateCaverneRequest;
 use App\Models\Conte;
 use App\Providers\ReponseApi;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
@@ -22,7 +23,7 @@ class CaverneController extends Controller
             $cavernes = caverne::all();
             return view('caverne/voir_cavernes', compact('cavernes'));
         } catch (Throwable $error) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error->getMessage());
         }
     }
 
@@ -35,7 +36,7 @@ class CaverneController extends Controller
         try {
             return view('/caverne/ajouter_modifier_caverne');
         } catch (Throwable $error) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Problème lors du chargement de la pages :' . $error->getMessage());
         }
     }
 
@@ -60,10 +61,10 @@ class CaverneController extends Controller
             ]);
 
             $caverne->save();
-            return redirect()->route('caverne.index');
+
+            return redirect()->route('caverne.index')->with('success', 'La caverne a été crée !');
         } catch (Throwable $error) {
-            dd($error);
-            // return redirect()->back();
+            return redirect()->back()->with('error', 'Problème lors de la création de la caverne :' . $error->getMessage());
         }
     }
 
@@ -84,7 +85,7 @@ class CaverneController extends Controller
             $cav = Caverne::find($caverne);
             return view('caverne/ajouter_modifier_caverne', compact('cav'));
         } catch (Throwable $error) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Problème lors du chargement de la page modification :' . $error->getMessage());
         }
     }
 
@@ -126,8 +127,9 @@ class CaverneController extends Controller
                 $cav->intro_caverne = $oldIntro;
             }
             $cav->save();
-            return redirect()->route('caverne.index');
+            return redirect()->route('caverne.index')->with('success', 'La caverne a été modifiée !');
         } catch (Throwable $error) {
+            return redirect()->back()->with('error', 'Problème lors de la sauvegarde de la modification :' . $error->getMessage());
         }
     }
 

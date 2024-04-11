@@ -29,9 +29,8 @@ class ConteController extends Controller
         } catch (Throwable $error) {
             return redirect()->back();
         }
-
-        
     }
+
     public function indexConteCaverne(int $idCaverne){
         $motCle = [];
         try {
@@ -57,28 +56,27 @@ class ConteController extends Controller
      */
     public function rechercheConteCaverne(Request $request)
     {
-        // $contes = ;//requete 
+        try {
+            if(!empty($request['idCaverne'])){
+                $contes = DB::table('contes')->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
+            
+            
+            } else {
+                $contes = DB::table('contes')->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
+            }
         
-        // $contesRecherche = $contes->where('titre_conte', 'LIKE', "%" . $request->search . "%");
-
-        // $motCle = [];
-        // try {
-        // $contes = Conte::where('caverne_id', $request['idCaverne'])->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
-        // $contes = Conte::all()->where('caverne_id', $request['idCaverne']);
-        // $newconte = $contes->where('titre_caverne', $request['search']);
-        // dd($contes);
-        //     foreach ($contes as $conte) {
-            // $motCle = MotCle::where("id", $conte->motcle()->mot_cle_id);
-            // $motcleconte = [];
-            // $motcleconte = $conte->motcles;
-            // array_push($motCle, $motcleconte);
-        // }
-        // dd($contes, $motCle);
-        // return view('conte/voir_contes', compact("contes", "motCle"));
-        return view('conte/voir_contes', ['idCaverne' => $request['idCaverne']])->with(["contes" => $contes, "motCle" => $motCle]);
-        // } catch(Throwable $e) {
-        // return redirect()->back();
-        // }
+        //$motCle = [];
+        
+            // foreach ($contes as $conte) {
+            //     $motCle = MotCle::where("id", $conte->motcles->mot_cle_id);
+            //     $motcleconte = $conte->motcles;
+            //     array_push($motCle, $motcleconte);
+            // }
+            $nbContes = count($contes);
+            return view('conte/voir_contes', ['idCaverne' => $request['idCaverne']])->with(["contes" => $contes, "motCle" => $motCle, "nbContes" => $nbContes]);
+        } catch(Throwable $e) {
+            return redirect()->back();
+        }
     }
 
 

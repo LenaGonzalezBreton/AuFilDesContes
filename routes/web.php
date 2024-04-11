@@ -33,8 +33,6 @@ Route::resources([
     'page' => PageController::class,
 ]);
 
-// Route::get('/caverne/{idCaverne}/conte', [App\Http\Controllers\ConteController::class, 'index'])->name("conte.index");
-
 Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');

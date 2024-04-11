@@ -10,7 +10,7 @@
 
 @section('body')
     <div class="grid mt-16">
-        <form class="max-w-sm mx-auto" action="@if(isset($motClef)){{route('motcle.update',$motClef)}}@else{{route('motcle.store')}}@endif" method="post">
+        <form class="max-w-sm mx-auto" action="@if(isset($motClef)){{route('motcle.update',$motClef->id)}}@else{{route('motcle.store')}}@endif" method="post">
             @csrf
             @if(isset($motClef)) @method('put') @else @method('post') @endif
             <div>

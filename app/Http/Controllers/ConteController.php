@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Conte;
@@ -33,7 +34,8 @@ class ConteController extends Controller
         }
     }
 
-    public function indexConteCaverne(int $idCaverne){
+    public function indexConteCaverne(int $idCaverne)
+    {
         $motCle = [];
         try {
             $contes = Conte::all()->where('caverne_id', $idCaverne);
@@ -59,16 +61,14 @@ class ConteController extends Controller
     public function rechercheConteCaverne(Request $request)
     {
         try {
-            if(!empty($request['idCaverne'])){
+            if (!empty($request['idCaverne'])) {
                 $contes = DB::table('contes')->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
-            
-            
             } else {
                 $contes = DB::table('contes')->where('titre_conte', 'LIKE', "%" . $request['search'] . "%")->get();
             }
-        
-        //$motCle = [];
-        
+
+            $motCle = [];
+
             // foreach ($contes as $conte) {
             //     $motCle = MotCle::where("id", $conte->motcles->mot_cle_id);
             //     $motcleconte = $conte->motcles;
@@ -76,7 +76,7 @@ class ConteController extends Controller
             // }
             $nbContes = count($contes);
             return view('conte/voir_contes', ['idCaverne' => $request['idCaverne']])->with(["contes" => $contes, "motCle" => $motCle, "nbContes" => $nbContes]);
-        } catch(Throwable $e) {
+        } catch (Throwable $e) {
             return redirect()->back();
         }
     }
@@ -327,7 +327,7 @@ class ConteController extends Controller
 
         try {
             $reponse = ReponseApi::ReponseAllowed($arrcontes);
-            return json_encode($reponse);
+            return $reponse;
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);
             return json_encode($reponse);

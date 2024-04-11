@@ -20,7 +20,7 @@
                     <input name="search" class="w-fit h-fit center border-2" placeholder="Recherche ...">
                     <button class=" bg-white text-gray border-2 border-r-2 border-b-2 hover:border-r-4 hover:border-b-4 hover:border-l hover-t">Rechercher</button>
                 </form>
-                <label> parmi les {{$nbContes}} contes.</label>
+                <label class="pl-2"> parmi les {{$nbContes}} contes.</label>
             </div>
         </span>
     </div>
@@ -46,15 +46,15 @@
 
         ?>
             <div class="relative rounded-lg border-double border-4 border-red-600 flex justify-center overflow-hidden items-center min-h-[550px]" id="conte_{{$conte->id}}">
-                <img class="max-w-full" src="storage/images/contes/{{$conte->image_conte}}" alt="">
+                <img class="max-w-full" src="{{asset('storage/images/contes/'.$conte->image_conte)}}" alt="">
                 <div class="absolute flex justify-center items-center">
                     <button onclick="playIntro({{$conte->id}})" class="text-5xl text-white border-4 rounded-full p-2 bg-gray-700 "><i id="logo_play_{{$conte->id}}" class="uil uil-play"></i></button>
                 </div>
                 <div class="absolute bottom-0 w-full flex text-center place-items-center flex-col bg-slate-200/60">
                     <h1 class="text-2xl font-bold">{{$conte->titre_conte}}</h1>
-                    <audio controlsList="nodownload" id="intro_{{$conte->id}}" class="w-9/12 hidden" src="storage/sounds/contes/intros/{{$conte->intro_conte}}" controls></audio>
+                    <audio controlsList="nodownload" id="intro_{{$conte->id}}" class="w-9/12 hidden" src="{{asset('storage/sounds/contes/intros/'.$conte->intro_conte)}}" controls></audio>
                     <h2 class="font-medium">Histoire :</h2>
-                    <audio controlsList="nodownload" class="w-9/12" src="storage/sounds/contes/histoires/{{$conte->histoire_conte}}" controls></audio>
+                    <audio controlsList="nodownload" class="w-9/12" src="{{asset('storage/sounds/contes/histoires/'.$conte->histoire_conte)}}" controls></audio>
                     <div class="flex flex-row justify-around w-full">
                         <div class="flex flex-col">
                             <p>Nombre de lecture</p>

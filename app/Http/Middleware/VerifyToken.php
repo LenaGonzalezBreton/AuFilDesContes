@@ -38,7 +38,7 @@ class VerifyToken
             // Ne génère pas des érreurs à chaque fois, 
             // mais renvoie juste une reponse avec : return echo response()->json([code: 401, message: 'Non autorisé'])
 
-            return response()->json(['code' => 401, 'message' => 'Non autorisé']);
+            return response()->json(['success' => false, 'code' => 401, 'message' => 'Non autorisé']);
         }
     }
     // (Après c'est juste des conseil ^^)

@@ -182,7 +182,7 @@ class CaverneController extends Controller
         }
         try {
             $reponse = ReponseApi::ReponseAllowed($arrcavernes);
-            return json_encode($reponse);
+            return $reponse;
         } catch (Throwable $error) {
             $reponse = ReponseApi::ReponseReject($error);
             return json_encode($reponse);

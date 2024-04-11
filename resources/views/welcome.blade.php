@@ -51,7 +51,7 @@
             </svg>
         </button>
         <div class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
+            <ul class="font-medium flex flex-col p-2 md:p-0 mt-4 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
                 <li>
                     <a href="#info" class="block py-2 px-3 text-gray-900 hover:text-[#dc2626] rounded md:p-0" aria-current="page">Informations</a>
                 </li>
@@ -62,9 +62,13 @@
                     <a href="#Livre" class="block py-2 px-3 text-gray-900 rounded hover:text-[#dc2626] md:p-0 ">Livre d'or</a>
                 </li>
                 <li>
-                    <a href="#Contact" class="block py-2 px-3 text-gray-900 rounded hover:text-[#dc2626] md:p-0">Contact</a>
+                    <a href="{{route('contact')}}" class="block py-2 px-3 text-gray-900 rounded hover:text-[#dc2626] md:p-0">Contact</a>
+                </li>
+                <li>
+                    <a href="download/aufildescontes.apk" download class="text-white bg-red-500 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center">Télécharger</a>
                 </li>
             </ul>
+
         </div>
     </div>
 </nav>
@@ -82,10 +86,7 @@
 <!--#endregion -->
 
 <!--#region Accueil  -->
-<div class="relative w-screen h-screen bg-cover flex flex-col items-center justify-center">
-    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-        <div class="w-[500px] h-[500px] bg-red-500 rounded-full"></div>
-    </div>
+<div class="w-screen h-screen bg-cover flex flex-col">
     <div class="text-3xl font-bold abhaya-libre-medium text-center">
         Parce que chaque enfant mérite un conte qui guérit.
         <br>
@@ -93,32 +94,28 @@
     </div>
     <div class="flex flex-col items-center justify-center mt-4 z-10">
         <img src="images/mockup_accueil.png" class="w-1/3">
-        <a href="#"
-           class="mt-14 rounded-full bg-[#dc2626] flex flex-col items-center w-48 py-1 px-2 transition-transform hover:scale-110">
-            <div class="text-xl text-white">Télécharger</div>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="white" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-            </svg>
-        </a>
     </div>
 </div>
 
 <!--#endregion -->
 
 <!--#region Informations  -->
-<div id="info" class="bg-cover w-screen flex mt-32">
+<div id="info" class="bg-cover w-screen flex mt-22">
     <div class="ml-16 mt-12 w-1/2 ">
-        <div class="text-4xl mb-8">Informations</div>
-        <div>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum id risus pretium luctus sit amet ut
-            elit. In a mattis nisi. Duis lacinia purus sed tellus dapibus faucibus. Mauris non ex commodo, pellentesque
-            purus vitae, auctor erat. Quisque vel ex nulla. Morbi sodales, risus in faucibus malesuada, dolor sem
-            blandit ligula, eget lobortis felis tortor et purus. Donec ligula enim, porta eget aliquet id, cursus et
-            enim. Pellentesque in lacus vitae neque rhoncus sollicitudin a in nulla. Cras volutpat blandit nisl ut
-            ultrices. Duis sed finibus mauris. Nam massa ex, fermentum sit amet blandit id, vestibulum nec nunc. Cras
-            massa felis, auctor at mollis pulvinar, efficitur nec ipsum.
+        <div class="text-4xl mb-6 text-gray-900">Informations</div>
+        <div class="text-gray-800">
+        <p class="mb-2">
+            Bienvenue sur <b><em>Au Fil des Contes</em></b>, votre destination pour explorer un monde de contes captivants et d'aventures fascinantes.
+        </p>
+        <p>Plongez dans un univers rempli de personnages mythiques, de mystères envoûtants et de leçons intemporelles, le tout à portée de clic.
+        <p>Parcourez notre bibliothèque virtuelle regorgeant de contes classiques, de fables intemporelles, et de récits originaux, tous présentés dans un format convivial pour une expérience de lecture immersive.</p>
+       <p> Que vous préfériez la magie des contes de fées, les enseignements des fables, ou les récits inspirants de voyage, notre application offre quelque chose pour chacun.</p>
+            <p class="mt-2"> <b>Rejoignez-nous</b>   dès aujourd'hui et commencez votre voyage à travers les histoires qui ont captivé l'imagination depuis des générations.</p>
         </div>
+        <a href="download/aufildescontes.apk" download
+           class="mt-4 rounded-full bg-[#dc2626] flex flex-col items-center w-28 py-3 px-2 transition-transform hover:scale-110">
+            <div class=" text-white">Télécharger</div>
+        </a>
     </div>
     <div class="flex justify-center w-2/3">
         <img src="images/mockup_info.png" class="w-2/3">
@@ -129,22 +126,17 @@
 
     <!--#region Mise à Jour  -->
 
-<div id="maj" class="bg-cover w-screen flex mt-10 mb-32">
+<div id="maj" class="bg-cover w-screen flex mt-8 mb-32">
     <div class="flex justify-center w-2/3">
-        <img src="images/illuenfant.png" class="w-1/2">
+        <img src="images/update.svg" class="w-1/2">
     </div>
     <div class="mr-16 mt-12 w-1/2">
-        <div class="text-4xl mt-16 mr-16 mb-8">Mise à jour</div>
+        <div class="text-4xl mt-16 mr-16 mb-6">Mise à jour</div>
         <div class="text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vel ipsum id risus pretium luctus sit amet ut
-            elit. In a mattis nisi. Duis lacinia purus sed tellus dapibus faucibus. Mauris non ex commodo, pellentesque
-            purus vitae, auctor erat. Quisque vel ex nulla. Morbi sodales, risus in faucibus malesuada, dolor sem
-            blandit ligula, eget lobortis felis tortor et purus. Donec ligula enim, porta eget aliquet id, cursus et
-            enim. Pellentesque in lacus vitae neque rhoncus sollicitudin a in nulla. Cras volutpat blandit nisl ut
-            ultrices. Duis sed finibus mauris. Nam massa ex, fermentum sit amet blandit id, vestibulum nec nunc. Cras
-            massa felis, auctor at mollis pulvinar, efficitur nec ipsum.
-
+           <p>Ici se trouveront les notes des prochaines mises à jour.</p>
+            <p>Chaque patch sera détaillé et expliqué ici.</p>
         </div>
+
     </div>
     </div>
     <!--#endregion -->
@@ -287,7 +279,10 @@
                         <a href="#Livre" class="hover:underline me-4 md:me-6">Livre D'or</a>
                     </li>
                     <li>
-                        <a href="#contact" class="hover:underline">Contact</a>
+                        <a href="{{route('contact')}}" class="hover:underline me-4 md:me-6">Contact</a>
+                    </li>
+                    <li>
+                        <a href="download/aufildescontes.apk" download class="hover:underline">Télécharger</a>
                     </li>
                 </ul>
             </div>

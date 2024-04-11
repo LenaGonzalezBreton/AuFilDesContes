@@ -1,29 +1,9 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.auth')
 
-    <title>Login</title>
+@section('title', 'Créer un compte')
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
-
-    <style>
-        .custom-scrollbar::-webkit-scrollbar {
-            display: none; /* Masquer la barre de défilement */
-        }
-    </style>
-
-</head>
-
-<body class="bg-white overflow-y-auto custom-scrollbar">
-<div class="h-screen flex justify-center items-center">
-    <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8">
-        <h5 class="text-xl font-medium text-gray-900 mb-4">S'identifier</h5>
+@section('content')
+  <h5 class="text-xl font-medium text-gray-900 mb-4">S'identifier</h5>
 
 
         <form class="space-y-6 max-w-sm mx-auto" method="POST" action="{{ route('login') }}">
@@ -72,9 +52,7 @@
                 Se connecter
             </button>
         </form>
-
-    </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-</body>
-</html>
+        <p class="ms-auto text-sm text-gray-700 mt-2">
+            Vous n'avez pas de compte ? <a class="text-red-500 hover:underline cursor-pointer" href="{{ route('register') }}" >Créez en un !</a>
+        </p>
+@endsection

@@ -21,10 +21,13 @@ Route::get('/', function () {
         ->orderBy('created_at', 'desc')
         ->get();
     return view('welcome',compact('livres'))->with('status', 'Message envoyé et en attente de validation par Au fil des contes');
-});
+})->name('home');
 
 Route::post('/addLivreOr', [LivreOrController::class, 'store'])->name('addLivreOr');
 
+Route::get('/contact', function (){
+    return view('contact');
+})->name('contact');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -212,8 +212,8 @@
                     <input type="text" id="prenom" name="prenom" class="mt-1 px-4 py-2 block w-full border rounded-md">
                 </div>
                 <div class="mb-4">
-                    <label for="message" class="block text-sm font-medium text-gray-700">Message (maximum 50 caractères)</label>
-                    <textarea required id="message" name="message" rows="3" maxlength="50" class="mt-1 px-4 py-2 block w-full border rounded-md"></textarea>
+                    <label for="message" class="block text-sm font-medium text-gray-700">Message (maximum 100 caractères)</label>
+                    <textarea required id="message" name="message" rows="3" maxlength="100" class="mt-1 px-4 py-2 block w-full border rounded-md"></textarea>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit" class="bg-[#D13415] text-white px-4 py-2 rounded-md hover:bg-[#dc2626]">Envoyer</button>

@@ -19,8 +19,8 @@ Ici on retrouvera le code de ces deux parties permettant l'informations de l'uti
 
 ## Tech Stack
 
-**Back:** Laravel
-**Framework CSS:** TailwindCSS
+- **Back:** Laravel
+- **Framework CSS:** TailwindCSS
 
 
 ## Authors

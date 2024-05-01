@@ -11,7 +11,7 @@ Ici on retrouvera le code de ces deux parties permettant l'informations de l'uti
 | Color             | Hex                                                                |
 | ----------------- | ------------------------------------------------------------------ |
 | Rouge très clair | ![#f87171 ](https://via.placeholder.com/10/f87171?text=+) #f87171  |
-| Rouge clair | ![#ef4444](https://via.placeholder.com/10/FDB60F?text=+) #ef4444 |
+| Rouge clair | ![#ef4444](https://via.placeholder.com/10/ef4444?text=+) #ef4444 |
 | Rouge medium | ![#dc2626](https://via.placeholder.com/10/dc2626?text=+) #dc2626 |
 | Rouge foncé | ![#b91c1c](https://via.placeholder.com/10/b91c1c?text=+) #b91c1c |
 | Rouge très foncé | ![#991b1b](https://via.placeholder.com/10/991b1b?text=+) #991b1b |

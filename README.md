@@ -2,8 +2,11 @@
 # Au Fil Des Contes
 
 Au fil des contes est une application regroupant des contes auditifs dédiés aux enfants et plus précisement les enfants malades.
+
 Cette application a été pensée pour apaiser la vie des enfants qui se battent au quotidien.
+
 Ce repositories est un dépôt pour le site vitrine et sa partie administrateur. 
+
 Ici on retrouvera le code de ces deux parties permettant l'informations de l'utilisateurs mais aussi l'accès à la modification, l'import et la suppression des contes pour la conteuse.
 
 ## Color Reference
